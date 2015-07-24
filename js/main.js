@@ -20,9 +20,9 @@ var frameDuration = 20;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
-	
+
 	registerListeners();
-	
+
 	var gameLoop = setInterval(runGame, frameDuration);
 }
 
@@ -35,7 +35,7 @@ function runGame() {
 function moveScoopy() {
 	var offset = player.pos.minus(scoopy.pos);
 	var dir = offset.normalize();
-	
+
 	if (offset.length() < 50) {
 		scoopy.pos.x += dir.x * scoopy.runSpeed;
 		scoopy.pos.y += dir.y * scoopy.runSpeed;
@@ -50,18 +50,19 @@ function moveScoopy() {
 
 function drawScreen() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	
+	tileEngine(ctx);
+
 	ctx.fillStyle = '#BFFF00'; // lime green
 	ctx.beginPath();
 	// x, y, width, startAngle, endAngle, reverse
 	ctx.arc(player.pos.x, player.pos.y, 20, 0, 2 * Math.PI, false);
 	ctx.fill();
-	
+
 	ctx.fillStyle = 'rgb(255,0,0)';
 	ctx.beginPath();
 	ctx.arc(scoopy.pos.x, scoopy.pos.y, 20, 0, 2 * Math.PI, false);
 	ctx.fill();
-	
+
 	var gradRef1 = player.pos;
 	var gradRef2 = player.pos;
 	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, 120, gradRef2.x, gradRef2.y, 25);

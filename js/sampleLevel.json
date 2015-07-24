@@ -1,0 +1,13 @@
+var foo =
+{"level":{
+  "levelName": "ice cream level",
+  "tiles": [
+    {"image": "file.png", "symbol": "X", "collidable": true},
+    {"image": "file2.png", "symbonl": "O", "collidable": true}
+  ],
+  "map":[
+    "XXXXXXXXXXXXXXXXXX
+     XXXXXXXXXXXXXXXXXX
+     XXXXXXXXXXXXXXXXXX"
+  ]
+}
