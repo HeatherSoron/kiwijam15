@@ -25,6 +25,7 @@ function runGame() {
 }
 
 function drawScreen() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = '#BFFF00'; // lime green
 	
 	ctx.beginPath();
