@@ -1,5 +1,6 @@
 var canvas;
 var ctx;
+var gameLoop;
 
 // player-lengths
 var sightDist = 6;
@@ -30,7 +31,7 @@ function init() {
 
 	registerListeners();
 
-	var gameLoop = setInterval(runGame, frameDuration);
+	gameLoop = setInterval(runGame, frameDuration);
 }
 
 function runGame() {
@@ -48,8 +49,9 @@ function moveScoopy() {
 		scoopy.pos.y += dir.y * scoopy.runSpeed;
 	} else {
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
-		var x = Math.cos(scoopy.wanderAngle) * scoopy.walkSpeed;
-		var y = Math.sin(scoopy.wanderAngle) * scoopy.walkSpeed;
+		// we want to bias Mr. Scoopy's walk towards the player
+		var x = (Math.cos(scoopy.wanderAngle) + dir.x) / 2 * scoopy.walkSpeed;
+		var y = (Math.sin(scoopy.wanderAngle) + dir.y) / 2 * scoopy.walkSpeed;
 		scoopy.pos.x += x;
 		scoopy.pos.y += y;
 	}
