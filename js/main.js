@@ -1,11 +1,15 @@
 var canvas;
 var ctx;
 
+// player-lengths
+var sightDist = 6;
+
 var player = {
 	speed: 3,
 	// velocity is not really a point, but it's an xy tuple
 	vel: new Point(),
 	pos: new Point(50, 50),
+	rad: 30
 }
 
 var scoopy = {
@@ -13,6 +17,7 @@ var scoopy = {
 	runSpeed: 1,
 	wanderAngle: 0,
 	pos: new Point(70, 70),
+	rad: 50,
 }
 
 var frameDuration = 20;
@@ -36,7 +41,7 @@ function moveScoopy() {
 	var offset = player.pos.minus(scoopy.pos);
 	var dir = offset.normalize();
 
-	if (offset.length() < 50) {
+	if (offset.length() < player.rad * (sightDist - 1)) {
 		scoopy.pos.x += dir.x * scoopy.runSpeed;
 		scoopy.pos.y += dir.y * scoopy.runSpeed;
 	} else {
@@ -57,17 +62,17 @@ function drawScreen() {
 	ctx.fillStyle = '#BFFF00'; // lime green
 	ctx.beginPath();
 	// x, y, width, startAngle, endAngle, reverse
-	ctx.arc(player.pos.x, player.pos.y, 20, 0, 2 * Math.PI, false);
+	ctx.arc(player.pos.x, player.pos.y, player.rad, 0, 2 * Math.PI, false);
 	ctx.fill();
 
 	ctx.fillStyle = 'rgb(255,0,0)';
 	ctx.beginPath();
-	ctx.arc(scoopy.pos.x, scoopy.pos.y, 20, 0, 2 * Math.PI, false);
+	ctx.arc(scoopy.pos.x, scoopy.pos.y, scoopy.rad, 0, 2 * Math.PI, false);
 	ctx.fill();
 
 	var gradRef1 = player.pos;
 	var gradRef2 = player.pos;
-	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, 120, gradRef2.x, gradRef2.y, 25);
+	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * 6, gradRef2.x, gradRef2.y, 25);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
