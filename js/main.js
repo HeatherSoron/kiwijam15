@@ -8,6 +8,13 @@ var player = {
 	pos: new Point(50, 50),
 }
 
+var scoopy = {
+	walkSpeed: 1,
+	runSpeed: 5,
+	vel: new Point(),
+	pos: new Point(70, 70),
+}
+
 var frameDuration = 20;
 
 function init() {
@@ -21,17 +28,28 @@ function init() {
 
 function runGame() {
 	player.pos.offsetBy(player.vel.times(player.speed));
+	moveScoopy();
 	drawScreen();
+}
+
+function moveScoopy() {
+	var dir = player.pos.minus(scoopy.pos).normalize();
+	scoopy.pos.x += dir.x * scoopy.walkSpeed;
+	scoopy.pos.y += dir.y * scoopy.walkSpeed;
 }
 
 function drawScreen() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.fillStyle = '#BFFF00'; // lime green
 	
+	ctx.fillStyle = '#BFFF00'; // lime green
 	ctx.beginPath();
 	// x, y, width, startAngle, endAngle, reverse
 	ctx.arc(player.pos.x, player.pos.y, 20, 0, 2 * Math.PI, false);
+	ctx.fill();
 	
+	ctx.fillStyle = 'rgb(255,0,0)';
+	ctx.beginPath();
+	ctx.arc(scoopy.pos.x, scoopy.pos.y, 20, 0, 2 * Math.PI, false);
 	ctx.fill();
 	
 	var gradient = ctx.createRadialGradient(player.pos.x, player.pos.y, 120, player.pos.x, player.pos.y, 25);
