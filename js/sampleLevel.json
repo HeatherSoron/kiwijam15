@@ -2,7 +2,7 @@ var foo =
   {
     "level":{
     "levelName": "ice cream level",
-    "tileSize": "32", //square
+    "tileSize": "60", //square
     "map": [
       "XXXXXXXXXXXXXXXXXXXXXXX",
       "XXOOOOOOOOOOOOOOOXXXXXX",
@@ -18,7 +18,7 @@ var foo =
       "XXOOOOOOOOOOOOOOOXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXX"],
     "tiles": [
-      {"image": "resources/images/square1.png", "symbol": "X", "collidable": true},
-      {"image": "resources/images/square2.png", "symbol": "O", "collidable": false}]
+      {"image": "resources/images/wooden_floor.png", "symbol": "X", "collidable": true},
+      {"image": "resources/images/kitchen_floor.png", "symbol": "O", "collidable": false}]
     }
   }
