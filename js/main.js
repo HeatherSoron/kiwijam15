@@ -50,6 +50,8 @@ function moveScoopy() {
 
 function drawScreen() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	//Draw map
 	tileEngine(ctx);
 
 	ctx.fillStyle = '#BFFF00'; // lime green
