@@ -9,9 +9,9 @@ var player = {
 }
 
 var scoopy = {
-	walkSpeed: 1,
-	runSpeed: 5,
-	vel: new Point(),
+	walkSpeed: 0.25,
+	runSpeed: 1,
+	wanderAngle: 0,
 	pos: new Point(70, 70),
 }
 
@@ -33,9 +33,19 @@ function runGame() {
 }
 
 function moveScoopy() {
-	var dir = player.pos.minus(scoopy.pos).normalize();
-	scoopy.pos.x += dir.x * scoopy.walkSpeed;
-	scoopy.pos.y += dir.y * scoopy.walkSpeed;
+	var offset = player.pos.minus(scoopy.pos);
+	var dir = offset.normalize();
+	
+	if (offset.length() < 50) {
+		scoopy.pos.x += dir.x * scoopy.runSpeed;
+		scoopy.pos.y += dir.y * scoopy.runSpeed;
+	} else {
+		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
+		var x = Math.cos(scoopy.wanderAngle) * scoopy.walkSpeed;
+		var y = Math.sin(scoopy.wanderAngle) * scoopy.walkSpeed;
+		scoopy.pos.x += x;
+		scoopy.pos.y += y;
+	}
 }
 
 function drawScreen() {
