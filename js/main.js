@@ -36,7 +36,7 @@ function drawScreen() {
 	
 	var gradient = ctx.createRadialGradient(player.pos.x, player.pos.y, 120, player.pos.x, player.pos.y, 25);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
-	gradient.addColorStop(1,"rgba(0,0,0,0.2)");
+	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
