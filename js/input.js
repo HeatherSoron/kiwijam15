@@ -12,6 +12,7 @@ var keysHeld = [];
 function registerListeners() {
 	document.addEventListener('keydown', handleKeyDown);
 	document.addEventListener('keyup', handleKeyUp);
+	window.addEventListener('resize', resizeCanvas);
 }
 
 function handleKeyDown(e) {

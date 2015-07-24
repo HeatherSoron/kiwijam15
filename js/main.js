@@ -5,19 +5,19 @@ var ctx;
 var sightDist = 6;
 
 var player = {
-	speed: 3,
+	speed: 4,
 	// velocity is not really a point, but it's an xy tuple
 	vel: new Point(),
 	pos: new Point(50, 50),
-	rad: 30
+	rad: 50
 }
 
 var scoopy = {
-	walkSpeed: 0.25,
-	runSpeed: 1,
+	walkSpeed: 0.5,
+	runSpeed: 2,
 	wanderAngle: 0,
 	pos: new Point(70, 70),
-	rad: 50,
+	rad: 100,
 }
 
 var frameDuration = 20;
@@ -25,6 +25,8 @@ var frameDuration = 20;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
+	
+	resizeCanvas();
 
 	registerListeners();
 
@@ -51,6 +53,11 @@ function moveScoopy() {
 		scoopy.pos.x += x;
 		scoopy.pos.y += y;
 	}
+}
+
+function resizeCanvas(e) {
+	canvas.width = document.body.clientWidth;
+	canvas.height = document.body.clientHeight;
 }
 
 function drawScreen() {
