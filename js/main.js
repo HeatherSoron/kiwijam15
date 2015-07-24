@@ -52,7 +52,9 @@ function drawScreen() {
 	ctx.arc(scoopy.pos.x, scoopy.pos.y, 20, 0, 2 * Math.PI, false);
 	ctx.fill();
 	
-	var gradient = ctx.createRadialGradient(player.pos.x, player.pos.y, 120, player.pos.x, player.pos.y, 25);
+	var gradRef1 = player.pos;
+	var gradRef2 = player.pos;
+	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, 120, gradRef2.x, gradRef2.y, 25);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
