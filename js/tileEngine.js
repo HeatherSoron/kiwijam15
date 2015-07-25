@@ -50,7 +50,11 @@ function isCollidable(x, y){
   console.log(map[tileX][tileY]);
   console.log(tileX + "," + tileY);
   var tileSymbol = map[tileX][tileY];
-  return foo.level.tiles[tileSymbol].collidable;
+  var tile = foo.level.tiles[tileSymbol];
+  if (!tile) {
+    return true;
+  }
+  return tile.collidable;
 }
 
 
