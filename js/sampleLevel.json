@@ -1,0 +1,24 @@
+var foo =
+  {
+    "level":{
+    "levelName": "ice cream level",
+    "tileSize": "60", //square
+    "map": [
+      "XXXXXXXXXXXXXXXXXXXXXXX",
+      "XXOOOOOOOOOOOOOOOXXXXXX",
+      "XXXXXXXOXXXXXXXOOXXXXXX",
+      "XXOOOOOOOOOOOOOOOOOOXXX",
+      "XXOOOOXXXOOOOOOOOXXOXXX",
+      "XXXXOOOXOOOOOXXOOXXOXXX",
+      "XXXXOXOOOOOOOOXXXXXOXXX",
+      "XXXXOXOOOOOOOOOOOOOOXXX",
+      "XXXXOXOOOOOOOXXXOXXXXXX",
+      "XXXXOXOOOOXXXOOOOXXXXXX",
+      "XXXOOXXXXOOOOOOOOXXXXXX",
+      "XXOOOOOOOOOOOOOOOXXXXXX",
+      "XXXXXXXXXXXXXXXXXXXXXXX"],
+    "tiles": [
+      {"image": "resources/images/wooden_floor.png", "symbol": "X", "collidable": true},
+      {"image": "resources/images/kitchen_floor.png", "symbol": "O", "collidable": false}]
+    }
+  }

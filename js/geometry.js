@@ -45,6 +45,10 @@ Point.prototype.plus = function(other) {
 	return this.clone().offsetBy(other);
 }
 
+Point.prototype.minus = function(other) {
+	return this.clone().offsetBy(other.times(-1));
+}
+
 Point.prototype.clone = function() {
 	return new Point(this.x, this.y);
 }
