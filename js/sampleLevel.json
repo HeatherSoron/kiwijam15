@@ -3,8 +3,8 @@ var foo =
     "level":{
     "levelName": "ice cream level",
     "tileSize": "60", //square
-    "mapFile": "resources/images/square1.png", // placeholder for testing purposes
-    "map": [
+    "mapFile": "resources/map_sketches/map_full.png", // placeholder for testing purposes
+    /*"map": [
       "XXXXXXXXXXXXXXXXXXXXXXX",
       "XXOOOOOOOOOOOOOOOXXXXXX",
       "XXOOCOOOOCOOOOOOOXXXXXX",
@@ -17,12 +17,12 @@ var foo =
       "XXXOOXOOOOXXXOOOOOXXXXX",
       "XXXOOXXXXOOOOOCOOXXXXXX",
       "XXOOOOOOCOOOOOOOOXXXXXX",
-      "XXXXXXXXXXXXXXXXXXXXXXX"],
+      "XXXXXXXXXXXXXXXXXXXXXXX"],*/
     "tiles": {
-      "X": {"image": "wooden_floor.png", "collidable": true},
-      "O": {"image": "kitchen_floor.png", "collidable": false}},
+      "136,0,21": {"image": "wooden_floor.png", "collidable": true},
+      "255,255,255": {"image": "kitchen_floor.png", "collidable": false}},
     "objects": {
-      "C": {
+      "0,255,0": {
         "images": [
           "icecream/Chocolate.png",
           "icecream/ChocolatePopsicle.png",
@@ -37,7 +37,7 @@ var foo =
           "icecream/VanillaChocPopsicle.png",
           "icecream/Vanilla.png",
         ],
-        "floorTile": "O",
+        "floorTile": "136,0,21",
         "ontouch": "gainIceCream"}}
     }
   }

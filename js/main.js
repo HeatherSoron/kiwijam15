@@ -50,29 +50,6 @@ function fullImagePath(path) {
 	return "resources/images/" + path;
 }
 
-function processLevel(level) {
-	loadMap(level.mapFile);
-	var processed = {};
-	for (var key in level) {
-		processed[key] = level[key];
-	}
-
-	processed.map = [];
-	for(rowIndex in level.map) {
-		var row = level.map[rowIndex].split('');
-		for (var colIndex in row) {
-			var symbol = row[colIndex];
-			if (symbol in level.objects) {
-				var obj = level.objects[symbol];
-				addObject(obj, colIndex, rowIndex, level.tileSize);
-				row[colIndex] = obj.floorTile;
-			}
-		}
-		processed.map[rowIndex] = row;
-	}
-	return processed;
-}
-
 function addObject(objDef, x, y, tileSize) {
 	objects.push({
 		def: objDef,
@@ -85,7 +62,9 @@ function startGame() {
 	score = 0;
 	objects = [];
 	cones = [];
-	currentLevel = processLevel(foo.level);
+	// currentLevel = processLevel(foo.level);
+
+	loadMapInit();
 	player = {
 		speed: 3,
 		// velocity is not really a point, but it's an xy tuple
@@ -168,6 +147,7 @@ function startGame() {
 	music.loop = true;
 	music.volume = quietVolume;
 	music.play();
+
 }
 
 function runGame() {
@@ -177,6 +157,7 @@ function runGame() {
 		}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
 			player.vel.y = 0;
 		}
+		// console.log(player.pos.x + "," + player.pos.y)
 		player.pos.offsetBy(player.vel.times(player.speed));
 		interactWithObjects();
 		animateAlice();
@@ -188,6 +169,7 @@ function runGame() {
 		music.playbackRate = Math.min(2.3, music.playbackRate + 0.005);
 	}
 	drawScreen();
+
 }
 
 function throwCone() {
@@ -257,11 +239,11 @@ function moveScoopy() {
 		score += player.scoopCount * scorePerScoopFrame;
 	}
 
-	if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
-		x = 0;
-	}else if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
-		y = 0;
-	}
+	// if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
+	// 	x = 0;
+	// }else if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
+	// 	y = 0;
+	// }
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
 

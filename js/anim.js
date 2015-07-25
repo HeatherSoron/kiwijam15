@@ -9,6 +9,9 @@ function animateAlice() {
 	} else if (player.vel.x < 0) {
 		player.facing = 'l';
 		frameDelta = -1;
+	} else if (player.vel.y < 0) {
+		player.facing = 'u';
+		frameDelta = -1;
 	}
 
 	animateFrame(player, frameDelta, 1);
