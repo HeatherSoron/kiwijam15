@@ -8,7 +8,7 @@ var sightDist = 6;
 var cones = [];
 
 var player = {
-	speed: 4,
+	speed: 3,
 	// velocity is not really a point, but it's an xy tuple
 	vel: new Point(),
 	pos: new Point(50, 50),
@@ -17,13 +17,13 @@ var player = {
 
 var scoopy = {
 	walkSpeed: 0.5,
-	runSpeed: 2,
+	runSpeed: 3.1,
 	wanderAngle: 0,
-	pos: new Point(70, 70),
+	pos: new Point(500, 200),
 	rad: 100,
 	// delays in ms
 	currentDelay: 0,
-	eatDelay: 400,
+	eatDelay: 700,
 }
 
 var frameDuration = 20;
