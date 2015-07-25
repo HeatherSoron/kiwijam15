@@ -54,6 +54,7 @@ function processLevel(level) {
 function addObject(objDef, x, y, tileSize) {
 	objects.push({
 		def: objDef,
+		imageVariation: Math.floor(Math.random() * objDef.images.length),
 		pos: new Point(x * tileSize, y * tileSize),
 	});
 }
@@ -215,7 +216,7 @@ function drawScreen() {
 	
 	for (var i = 0; i < objects.length; ++i) {
 		var image = new Image();
-		image.src = fullImagePath(objects[i].def.image);
+		image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
 		ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
 	}
 

@@ -22,7 +22,7 @@ function animateScoopy(x, y, running) {
 	animateFrame(scoopy, frameDelta, running ? 1 : 0.3);
 }
 
-function animateFrame(char, frameDelta, timeMultiplier) {		
+function animateFrame(char, frameDelta, timeMultiplier) {
 	if (frameDelta) {
 		if (char.currentFrameDelay <= 0) {
 			// modulus doesn't QUITE do what I want for negatives, so let's do it manually

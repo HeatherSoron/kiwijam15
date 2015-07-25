@@ -21,6 +21,22 @@ var foo =
       "X": {"image": "wooden_floor.png", "collidable": true},
       "O": {"image": "kitchen_floor.png", "collidable": false}},
     "objects": {
-      "1": {"image": "icecream/Chocolate.png", "floorTile": "O", "ontouch": "gainIceCream"}}
+      "1": {
+        "images": [
+          "icecream/Chocolate.png",
+          "icecream/ChocolatePopsicle.png",
+          "icecream/ChocolateSprinklePop.png",
+          "icecream/ChocSprinkleCream.png",
+          "icecream/Goldenpop.png",
+          "icecream/MintCherry.png",
+          "icecream/Mint.png",
+          "icecream/RaspberryPop.png",
+          "icecream/StrawberryChoco.png",
+          "icecream/Strawberry.png",
+          "icecream/VanillaChocPopsicle.png",
+          "icecream/Vanilla.png",
+        ],
+        "floorTile": "O",
+        "ontouch": "gainIceCream"}}
     }
   }
