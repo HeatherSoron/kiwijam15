@@ -3,9 +3,9 @@ var ctx;
 var gameLoop;
 
 // player-lengths
-var sightDist = 6;
+var sightDist = 8;
 
-var cones = [];
+var cones;
 
 var player;
 var scoopy;
@@ -42,13 +42,14 @@ function processLevel(level) {
 		processed[key] = level[key];
 	}
 
-	for(rowIndex in processed.map) {
-		var row = processed.map[rowIndex].split('');
+	processed.map = [];
+	for(rowIndex in level.map) {
+		var row = level.map[rowIndex].split('');
 		for (var colIndex in row) {
 			var symbol = row[colIndex];
-			if (symbol in processed.objects) {
-				var obj = processed.objects[symbol];
-				addObject(obj, colIndex, rowIndex, processed.tileSize);
+			if (symbol in level.objects) {
+				var obj = level.objects[symbol];
+				addObject(obj, colIndex, rowIndex, level.tileSize);
 				row[colIndex] = obj.floorTile;
 			}
 		}
@@ -67,6 +68,7 @@ function addObject(objDef, x, y, tileSize) {
 
 function startGame() {
 	objects = [];
+	cones = [];
 	currentLevel = processLevel(foo.level);
 	player = {
 		speed: 3,
@@ -79,11 +81,13 @@ function startGame() {
 			'r': 8,
 			'l': 8,
 			'd': 7,
+			'u': 7,
 		},
 		frameCols: {
 			'r': 8,
 			'l': 8,
 			'd': 7,
+			'u': 7,
 		},
 		frame: 0,
 		frameDelay: 60,
@@ -93,6 +97,7 @@ function startGame() {
 			'r': 'Right',
 			'l': 'Left',
 			'd': 'Front',
+			'u': 'Back',
 		},
 	};
 	for (var facing in player.images) {
@@ -112,21 +117,24 @@ function startGame() {
 		eatDelay: 700,
 		frameCount: {
 			'l': 8,
+			'r': 8,
 		},
 		frameCols: {
 			'l': 4,
+			'r': 4,
 		},
 		frame: 0,
 		frameDelay: 60,
 		currentFrameDelay: 0,
 		facing: 'l',
 		images: {
-			'l': 'left',
+			'l': 'leftside',
+			'r': 'right',
 		},
 	};
 	for (var facing in scoopy.images) {
 		var image = new Image();
-		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "side_sprite.png");
+		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "_sprite.png");
 		scoopy.images[facing] = image;
 	}
 
@@ -165,13 +173,17 @@ function throwCone() {
 	return true;
 }
 
+function scoopyDist() {
+	return player.pos.minus(scoopy.pos);
+}
+
 function moveScoopy() {
 	if (scoopy.currentDelay > 0) {
 		scoopy.currentDelay -= frameDuration;
 		return;
 	}
 
-	var offset = player.pos.minus(scoopy.pos);
+	var offset = scoopyDist();
 	var playerDir = offset.normalize();
 	var cone = undefined;
 
@@ -188,7 +200,7 @@ function moveScoopy() {
 	var x = 0;
 	var y = 0;
 	var running = false;
-	var chaseDistance = player.rad * (sightDist - 1);
+	var chaseDistance = player.rad * (sightDist - 3);
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
 		audio.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
@@ -261,7 +273,7 @@ function drawScreen() {
 	ctx.restore();
 	var gradRef1 = new Point(canvas.width/2, canvas.height/2);
 	var gradRef2 = new Point(canvas.width/2, canvas.height/2);
-	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * 8, gradRef2.x, gradRef2.y, 25);
+	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * sightDist, gradRef2.x, gradRef2.y, 25);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
