@@ -14,7 +14,7 @@ function interactWithObjects() {
 	}
 	
 	for (var i = remove.length - 1; i >= 0; --i) {
-		objects.splice(remove[i]);
+		objects.splice(remove[i], 1);
 	}
 }
 

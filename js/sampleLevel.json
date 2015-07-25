@@ -6,22 +6,22 @@ var foo =
     "map": [
       "XXXXXXXXXXXXXXXXXXXXXXX",
       "XXOOOOOOOOOOOOOOOXXXXXX",
-      "XXOOOOOOOOOOOOOOOXXXXXX",
-      "XXOOOOOOOOOOOOOOOOOOOXX",
+      "XXOOCOOOOCOOOOOOOXXXXXX",
+      "XXOOOOOOOOOOOCOOOOOOOXX",
       "XXOOOOXXXOOOOOOOOXXOOXX",
-      "XXXO1OXXOOOOOXXOOXXOOXX",
+      "XXXOCOXXOOCOOXXOOXXOOXX",
       "XXXOOXOOOOOOOOXXXXXOOXX",
-      "XXXOOXOOOOOOOOOOOOOOOXX",
+      "XXXOOXOOOCOOOOOCOOOOOXX",
       "XXXOOXOOOOOOOXXXOOXXXXX",
       "XXXOOXOOOOXXXOOOOOXXXXX",
-      "XXXOOXXXXOOOOOOOOXXXXXX",
-      "XXOOOOOOOOOOOOOOOXXXXXX",
+      "XXXOOXXXXOOOOOCOOXXXXXX",
+      "XXOOOOOOCOOOOOOOOXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXX"],
     "tiles": {
       "X": {"image": "wooden_floor.png", "collidable": true},
       "O": {"image": "kitchen_floor.png", "collidable": false}},
     "objects": {
-      "1": {
+      "C": {
         "images": [
           "icecream/Chocolate.png",
           "icecream/ChocolatePopsicle.png",
