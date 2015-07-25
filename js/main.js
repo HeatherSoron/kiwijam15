@@ -25,10 +25,10 @@ var volumeScaleRate = 0.6;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
-	
+
 	resizeCanvas();
 	registerListeners();
-	
+
 	startGame();
 }
 
@@ -41,7 +41,7 @@ function processLevel(level) {
 	for (var key in level) {
 		processed[key] = level[key];
 	}
-	
+
 	for(rowIndex in processed.map) {
 		var row = processed.map[rowIndex].split('');
 		for (var colIndex in row) {
@@ -100,7 +100,7 @@ function startGame() {
 		image.src = fullImagePath("characters/Alice_" + player.images[facing] + ".png");
 		player.images[facing] = image;
 	}
-	
+
 	scoopy = {
 		walkSpeed: 0.5,
 		runSpeed: 3.1,
@@ -129,7 +129,7 @@ function startGame() {
 		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "side_sprite.png");
 		scoopy.images[facing] = image;
 	}
-	
+
 	audio = new Audio('resources/music/GameJamGREEN_1.mp3');
 	audio.loop = true;
 	audio.volume = quietVolume;
@@ -147,7 +147,7 @@ function runGame() {
 	player.pos.offsetBy(player.vel.times(player.speed));
 	interactWithObjects();
 	animateAlice();
-	
+
 	moveScoopy();
 	drawScreen();
 }
@@ -184,7 +184,7 @@ function moveScoopy() {
 	}
 
 	var dir = offset.normalize();
-	
+
 	var x = 0;
 	var y = 0;
 	var running = false;
@@ -214,10 +214,15 @@ function moveScoopy() {
 		x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
 		y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
 	}
-	
+
+	if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
+		x = 0;
+	}else if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
+		y = 0;
+	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
-	
+
 	animateScoopy(x, y, running);
 }
 
@@ -234,7 +239,7 @@ function drawScreen() {
 
 	//Draw map
 	tileEngine(ctx);
-	
+
 	for (var i = 0; i < objects.length; ++i) {
 		var image = new Image();
 		image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
@@ -250,7 +255,7 @@ function drawScreen() {
 		ctx.arc(pos.x, pos.y, 20, 0, 2 * Math.PI, false);
 		ctx.fill();
 	}
-	
+
 	drawCharacter(scoopy);
 
 	ctx.restore();
