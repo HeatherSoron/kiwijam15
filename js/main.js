@@ -3,7 +3,7 @@ var ctx;
 var gameLoop;
 
 // player-lengths
-var sightDist = 6;
+var sightDist = 8;
 
 var cones = [];
 
@@ -168,13 +168,17 @@ function throwCone() {
 	return true;
 }
 
+function scoopyDist() {
+	return player.pos.minus(scoopy.pos);
+}
+
 function moveScoopy() {
 	if (scoopy.currentDelay > 0) {
 		scoopy.currentDelay -= frameDuration;
 		return;
 	}
 
-	var offset = player.pos.minus(scoopy.pos);
+	var offset = scoopyDist();
 	var playerDir = offset.normalize();
 	var cone = undefined;
 
@@ -191,7 +195,7 @@ function moveScoopy() {
 	var x = 0;
 	var y = 0;
 	var running = false;
-	var chaseDistance = player.rad * (sightDist - 1);
+	var chaseDistance = player.rad * (sightDist - 3);
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
 		audio.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
@@ -259,7 +263,7 @@ function drawScreen() {
 	ctx.restore();
 	var gradRef1 = new Point(canvas.width/2, canvas.height/2);
 	var gradRef2 = new Point(canvas.width/2, canvas.height/2);
-	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * 8, gradRef2.x, gradRef2.y, 25);
+	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * sightDist, gradRef2.x, gradRef2.y, 25);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
