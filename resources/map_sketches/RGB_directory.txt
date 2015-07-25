@@ -1,0 +1,16 @@
+RGB values:
+0, 0, 0: Wood wall
+255, 255, 255: empty space
+0, 0, 255: gym centre
+128, 64, 64: Wood floor
+128,64, 0: gym bench not front
+0, 255, 0: gym bench front
+0, 128, 255: kitchen tile
+0, 255, 255: pantry tile
+Kitchen bench 1
+Kitchen bench 2
+Kitchen bench 3
+Fridge
+0, 64, 128: Classroom floor
+255, 128, 255: nurse floor
+255, 127, 39: Stage floor

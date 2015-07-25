@@ -5,12 +5,24 @@ var gameLoop;
 // player-lengths
 var sightDist = 8;
 
+// lime green
+var endTextColor = 'rgb(0,255,0)';
+var lossText = "a sacrifice for mr. scoopy's eyes-cream";
+var scoreTextTemplate = "your value: %d";
+
+var score;
+var scoopyScorePenalty = 30;
+var scorePerScoopFrame = 1;
+
 var cones;
 
 var player;
 var scoopy;
 var currentLevel;
 var objects;
+
+var gradOuterRad;
+var gradInnerRad;
 
 var music;
 
@@ -30,6 +42,8 @@ function init() {
 	registerListeners();
 
 	startGame();
+
+	gameLoop = setInterval(runGame, frameDuration);
 }
 
 function fullImagePath(path) {
@@ -68,6 +82,7 @@ function addObject(objDef, x, y, tileSize) {
 }
 
 function startGame() {
+	score = 0;
 	objects = [];
 	cones = [];
 	currentLevel = processLevel(foo.level);
@@ -108,7 +123,7 @@ function startGame() {
 	}
 
 	scoopy = {
-		walkSpeed: 0.5,
+		walkSpeed: 2.5,
 		runSpeed: 3.1,
 		wanderAngle: 0,
 		pos: new Point(500, 200),
@@ -119,10 +134,12 @@ function startGame() {
 		frameCount: {
 			'l': 8,
 			'r': 8,
+			'd': 8,
 		},
 		frameCols: {
 			'l': 4,
 			'r': 4,
+			'd': 4,
 		},
 		frame: 0,
 		frameDelay: 60,
@@ -131,6 +148,7 @@ function startGame() {
 		images: {
 			'l': 'leftside',
 			'r': 'right',
+			'd': 'front',
 		},
 	};
 	for (var facing in scoopy.images) {
@@ -139,25 +157,36 @@ function startGame() {
 		scoopy.images[facing] = image;
 	}
 
-	audio = new Audio('resources/music/GameJamGREEN_1.mp3');
-	audio.loop = true;
-	audio.volume = quietVolume;
-	audio.play();
+	gradOuterRad = player.rad * sightDist;
+	gradInnerRad = 25;
 
-	gameLoop = setInterval(runGame, frameDuration);
+	if (music) {
+		music.pause();
+	}
+
+	music = new Audio('resources/music/GameJamGREEN_1.mp3');
+	music.loop = true;
+	music.volume = quietVolume;
+	music.play();
 }
 
 function runGame() {
-	if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
-		player.vel.x = 0;
-	}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
-		player.vel.y = 0;
-	}
-	player.pos.offsetBy(player.vel.times(player.speed));
-	interactWithObjects();
-	animateAlice();
+	if (!lost) {
+		if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
+			player.vel.x = 0;
+		}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
+			player.vel.y = 0;
+		}
+		player.pos.offsetBy(player.vel.times(player.speed));
+		interactWithObjects();
+		animateAlice();
 
-	moveScoopy();
+		moveScoopy();
+	} else {
+		gradOuterRad = Math.max(30, gradOuterRad - 3);
+		gradInnerRad = Math.max(0, gradInnerRad - 1);
+		music.playbackRate = Math.min(2.3, music.playbackRate + 0.005);
+	}
 	drawScreen();
 }
 
@@ -204,28 +233,28 @@ function moveScoopy() {
 	var chaseDistance = player.rad * (sightDist - 3);
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
-		audio.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
-		audio.playbackRate = 1 + 0.5 * scaleFactor
+		music.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
+		music.playbackRate = 1 + 0.5 * scaleFactor
 		x = dir.x * scoopy.runSpeed;
 		y = dir.y * scoopy.runSpeed;
 		if (offset.length() < player.rad / 2) {
 			if (cone === undefined) {
-				lost = true;
-				audio.stop;
-				clearInterval(gameLoop);
+				lose();
 			} else {
 				cones.splice(cone, 1);
 				scoopy.currentDelay = scoopy.eatDelay;
 			}
 		}
+		score -= scoopyScorePenalty;
 		running = true;
 	} else {
-		audio.volume = quietVolume;
-		audio.playbackRate = 1;
+		music.volume = quietVolume;
+		music.playbackRate = 1;
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 		// we want to bias Mr. Scoopy's walk towards the player
 		x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
 		y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
+		score += player.scoopCount * scorePerScoopFrame;
 	}
 
 	if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
@@ -237,6 +266,11 @@ function moveScoopy() {
 	scoopy.pos.y += y;
 
 	animateScoopy(x, y, running);
+}
+
+function lose() {
+	lost = true;
+	drawScreen();
 }
 
 function resizeCanvas(e) {
@@ -274,12 +308,23 @@ function drawScreen() {
 	ctx.restore();
 	var gradRef1 = new Point(canvas.width/2, canvas.height/2);
 	var gradRef2 = new Point(canvas.width/2, canvas.height/2);
-	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * sightDist, gradRef2.x, gradRef2.y, 25);
+	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, gradOuterRad, gradRef2.x, gradRef2.y, gradInnerRad);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+	if (lost) {
+		ctx.fillStyle = endTextColor;
+		ctx.font = "bold 30pt Comic Sans MS";
+
+		var textWidth = ctx.measureText(lossText).width;
+		ctx.fillText(lossText, (canvas.width - textWidth) / 2, 70);
+
+		var scoreText = scoreTextTemplate.replace(/%d/, score);
+		textWidth = ctx.measureText(scoreText).width;
+		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
+	}
 }
 
 function drawCharacter(char) {
