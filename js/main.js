@@ -123,7 +123,7 @@ function startGame() {
 	}
 	
 	scoopy = {
-		walkSpeed: 0.5,
+		walkSpeed: 2.5,
 		runSpeed: 3.1,
 		wanderAngle: 0,
 		pos: new Point(500, 200),
