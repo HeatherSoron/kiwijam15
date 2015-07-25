@@ -9,6 +9,7 @@ var cones = [];
 
 var player;
 var scoopy;
+var currentLevel;
 
 var lost = false;
 
@@ -21,24 +22,30 @@ function init() {
 	resizeCanvas();
 	registerListeners();
 	
-	processLevel(foo.level);
 	startGame();
 }
 
 function processLevel(level) {
-	for(rowIndex in level.map){
-		var row = level.map[rowIndex].split('');
+	var processed = {};
+	for (var key in level) {
+		processed[key] = level[key];
+	}
+	
+	for(rowIndex in processed.map) {
+		var row = processed.map[rowIndex].split('');
 		for (var colIndex in row) {
 			var symbol = row[colIndex];
-			if (symbol in level.objects) {
-				row[colIndex] = level.objects[symbol].floorTile;
+			if (symbol in processed.objects) {
+				row[colIndex] = processed.objects[symbol].floorTile;
 			}
 		}
-		level.map[rowIndex] = row;
+		processed.map[rowIndex] = row;
 	}
+	return processed;
 }
 
 function startGame() {
+	currentLevel = processLevel(foo.level);
 	player = {
 		speed: 3,
 		// velocity is not really a point, but it's an xy tuple
