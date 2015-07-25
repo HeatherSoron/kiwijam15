@@ -12,9 +12,15 @@ var scoopy;
 var currentLevel;
 var objects;
 
+var music;
+
 var lost = false;
 
 var frameDuration = 20;
+
+var quietVolume = 0.2;
+var baseLoudVolume = 0.4;
+var volumeScaleRate = 0.6;
 
 function init() {
 	canvas = document.getElementById('kiwijam');
@@ -120,6 +126,11 @@ function startGame() {
 		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "side_sprite.png");
 		scoopy.images[facing] = image;
 	}
+	
+	audio = new Audio('resources/music/GameJamGREEN_1.mp3');
+	audio.loop = true;
+	audio.volume = quietVolume;
+	audio.play();
 
 	gameLoop = setInterval(runGame, frameDuration);
 }
@@ -174,12 +185,17 @@ function moveScoopy() {
 	var x = 0;
 	var y = 0;
 	var running = false;
-	if (offset.length() < player.rad * (sightDist - 1)) {
+	var chaseDistance = player.rad * (sightDist - 1);
+	if (offset.length() < chaseDistance) {
+		var scaleFactor = (1 - (offset.length() / chaseDistance));
+		audio.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
+		audio.playbackRate = 1 + 0.5 * scaleFactor
 		x = dir.x * scoopy.runSpeed;
 		y = dir.y * scoopy.runSpeed;
 		if (offset.length() < player.rad / 2) {
 			if (cone === undefined) {
 				lost = true;
+				audio.stop;
 				clearInterval(gameLoop);
 			} else {
 				cones.splice(cone, 1);
@@ -188,6 +204,8 @@ function moveScoopy() {
 		}
 		running = true;
 	} else {
+		audio.volume = quietVolume;
+		audio.playbackRate = 1;
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 		// we want to bias Mr. Scoopy's walk towards the player
 		x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
