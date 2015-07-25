@@ -20,7 +20,7 @@ function processMap(){
       if(symbol in foo.level.objects){
         var obj = foo.level.objects[symbol];
         addObject(obj, rowIndex, columnIndex, foo.level.tileSize);
-        row[i] = obj.floorTile;
+        row[columnIndex] = obj.floorTile;
       }
     }
     map.push(row);
