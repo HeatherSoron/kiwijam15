@@ -8,6 +8,11 @@ var sightDist = 8;
 // lime green
 var endTextColor = 'rgb(0,255,0)';
 var lossText = "a sacrifice for mr. scoopy's eyes-cream";
+var scoreTextTemplate = "your value: %d";
+
+var score;
+var scoopyScorePenalty = 50;
+var scorePerScoopFrame = 1;
 
 var cones;
 
@@ -77,6 +82,7 @@ function addObject(objDef, x, y, tileSize) {
 }
 
 function startGame() {
+	score = 0;
 	objects = [];
 	cones = [];
 	currentLevel = processLevel(foo.level);
@@ -236,6 +242,7 @@ function moveScoopy() {
 				scoopy.currentDelay = scoopy.eatDelay;
 			}
 		}
+		score -= scoopyScorePenalty;
 		running = true;
 	} else {
 		audio.volume = quietVolume;
@@ -244,6 +251,7 @@ function moveScoopy() {
 		// we want to bias Mr. Scoopy's walk towards the player
 		x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
 		y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
+		score += player.scoopCount * scorePerScoopFrame;
 	}
 	
 	scoopy.pos.x += x;
@@ -303,8 +311,13 @@ function drawScreen() {
 	if (lost) {
 		ctx.fillStyle = endTextColor;
 		ctx.font = "bold 30pt Comic Sans MS";
+		
 		var textWidth = ctx.measureText(lossText).width;
 		ctx.fillText(lossText, (canvas.width - textWidth) / 2, 70);
+		
+		var scoreText = scoreTextTemplate.replace(/%d/, score);
+		textWidth = ctx.measureText(scoreText).width;
+		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, 140);
 	}
 }
 
