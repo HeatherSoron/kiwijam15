@@ -3,6 +3,7 @@ var foo =
     "level":{
     "levelName": "ice cream level",
     "tileSize": "60", //square
+    "mapFile": "resources/images/square1.png", // placeholder for testing purposes
     "map": [
       "XXXXXXXXXXXXXXXXXXXXXXX",
       "XXOOOOOOOOOOOOOOOXXXXXX",
