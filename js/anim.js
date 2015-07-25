@@ -3,7 +3,10 @@ function animateAlice() {
 	if (player.vel.y > 0) {
 		player.facing = 'd';
 		frameDelta = 1;
-	}else if (player.vel.x > 0) {
+	} else if (player.vel.y < 0) {
+		player.facing = 'u';
+		frameDelta = 1;
+	} else if (player.vel.x > 0) {
 		player.facing = 'r';
 		frameDelta = 1;
 	} else if (player.vel.x < 0) {
