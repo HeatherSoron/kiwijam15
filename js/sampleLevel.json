@@ -9,7 +9,7 @@ var foo =
       "XXOOOOOOOOOOOOOOOXXXXXX",
       "XXOOOOOOOOOOOOOOOOOOOXX",
       "XXOOOOXXXOOOOOOOOXXOOXX",
-      "XXXOCOXXOOOOOXXOOXXOOXX",
+      "XXXO1OXXOOOOOXXOOXXOOXX",
       "XXXOOXOOOOOOOOXXXXXOOXX",
       "XXXOOXOOOOOOOOOOOOOOOXX",
       "XXXOOXOOOOOOOXXXOOXXXXX",
@@ -21,6 +21,6 @@ var foo =
       "X": {"image": "resources/images/wooden_floor.png", "collidable": true},
       "O": {"image": "resources/images/kitchen_floor.png", "collidable": false}},
     "objects": {
-      "C": {"image": "resources/images/square3.png", "floorTile": "O"}}
+      "1": {"image": "resources/images/icecream/Chocolate.png", "floorTile": "O", "ontouch": "gainIceCream"}}
     }
   }

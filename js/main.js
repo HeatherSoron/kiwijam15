@@ -62,7 +62,8 @@ function startGame() {
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
 		pos: new Point(121, 121),
-		rad: 50
+		rad: 50,
+		scoopCount: 3,
 	};
 	
 	scoopy = {
@@ -86,16 +87,23 @@ function runGame() {
 		player.vel.y = 0;
 	}
 	player.pos.offsetBy(player.vel.times(player.speed));
+	interactWithObjects();
+	
 	moveScoopy();
 	drawScreen();
 }
 
 function throwCone() {
+	if (player.scoopCount <= 0) {
+		return false;
+	}
+	player.scoopCount--;
 	var offset = scoopy.pos.minus(player.pos);
 	var dir = offset.normalize();
 
-	var pos = dir.times(player.rad * 2).offsetBy(player.pos);
+	var pos = dir.times(player.rad * 1).offsetBy(player.pos);
 	cones.push(pos);
+	return true;
 }
 
 function moveScoopy() {
