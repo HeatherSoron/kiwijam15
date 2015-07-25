@@ -5,7 +5,7 @@ var gameLoop;
 // player-lengths
 var sightDist = 8;
 
-var cones = [];
+var cones;
 
 var player;
 var scoopy;
@@ -42,13 +42,14 @@ function processLevel(level) {
 		processed[key] = level[key];
 	}
 	
-	for(rowIndex in processed.map) {
-		var row = processed.map[rowIndex].split('');
+	processed.map = [];
+	for(rowIndex in level.map) {
+		var row = level.map[rowIndex].split('');
 		for (var colIndex in row) {
 			var symbol = row[colIndex];
-			if (symbol in processed.objects) {
-				var obj = processed.objects[symbol];
-				addObject(obj, colIndex, rowIndex, processed.tileSize);
+			if (symbol in level.objects) {
+				var obj = level.objects[symbol];
+				addObject(obj, colIndex, rowIndex, level.tileSize);
 				row[colIndex] = obj.floorTile;
 			}
 		}
@@ -67,6 +68,7 @@ function addObject(objDef, x, y, tileSize) {
 
 function startGame() {
 	objects = [];
+	cones = [];
 	currentLevel = processLevel(foo.level);
 	player = {
 		speed: 3,
