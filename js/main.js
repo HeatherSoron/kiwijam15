@@ -27,7 +27,13 @@ function init() {
 
 function processLevel(level) {
 	for(rowIndex in level.map){
-		var row = level.map[rowIndex];
+		var row = level.map[rowIndex].split('');
+		for (var colIndex in row) {
+			var symbol = row[colIndex];
+			if (symbol in level.objects) {
+				row[colIndex] = level.objects[symbol].floorTile;
+			}
+		}
 		level.map[rowIndex] = row;
 	}
 }
