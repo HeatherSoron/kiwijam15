@@ -141,11 +141,13 @@ function startGame() {
 			'l': 8,
 			'r': 8,
 			'd': 8,
+			'u': 8,
 		},
 		frameCols: {
 			'l': 4,
 			'r': 4,
 			'd': 4,
+			'u': 4,
 		},
 		frame: 0,
 		frameDelay: 60,
@@ -155,6 +157,7 @@ function startGame() {
 			'l': 'leftside',
 			'r': 'right',
 			'd': 'front',
+			'u': 'back',
 		},
 	};
 	for (var facing in scoopy.images) {

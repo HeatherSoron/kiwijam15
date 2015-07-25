@@ -24,6 +24,9 @@ function animateScoopy(x, y, running) {
 		if (y > 0) {
 			scoopy.facing = 'd';
 			frameDelta = 1;
+		} else if (y < 0) {
+			scoopy.facing = 'u';
+			frameDelta = 1;
 		}
 	} else {
 		if (x < 0) {
