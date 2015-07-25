@@ -24,13 +24,14 @@ var objects;
 var gradOuterRad;
 var gradInnerRad;
 
-var music;
+var chaseMusic;
+var ambientMusic;
 
 var lost = false;
 
 var frameDuration = 20;
 
-var quietVolume = 0.2;
+var quietVolume = 1.0;
 var baseLoudVolume = 0.4;
 var volumeScaleRate = 0.6;
 
@@ -41,7 +42,14 @@ function init() {
 	resizeCanvas();
 	registerListeners();
 	
+	ambientMusic = new Audio('resources/music/GameJamGREEN_1.mp3');
+	ambientMusic.loop = true;
+	
+	chaseMusic = new Audio('resources/music/GameJamCHASE_Celli&Glock.mp3');
+	chaseMusic.loop = true;
+	
 	startGame();
+	
 	
 	gameLoop = setInterval(runGame, frameDuration);
 }
@@ -160,14 +168,8 @@ function startGame() {
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
 	
-	if (music) {
-		music.pause();
-	}
-	
-	music = new Audio('resources/music/GameJamGREEN_1.mp3');
-	music.loop = true;
-	music.volume = quietVolume;
-	music.play();
+	ambientMusic.volume = quietVolume;
+	ambientMusic.play();
 }
 
 function runGame() {
@@ -185,7 +187,7 @@ function runGame() {
 	} else {
 		gradOuterRad = Math.max(30, gradOuterRad - 3);
 		gradInnerRad = Math.max(0, gradInnerRad - 1);
-		music.playbackRate = Math.min(2.3, music.playbackRate + 0.005);
+		ambientMusic.playbackRate = Math.min(2.3, ambientMusic.playbackRate + 0.005);
 	}
 	
 	drawScreen();
@@ -234,8 +236,13 @@ function moveScoopy() {
 	var chaseDistance = player.rad * (sightDist - 3);
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
-		music.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
-		music.playbackRate = 1 + 0.5 * scaleFactor
+		
+		if (!ambientMusic.paused) {
+			ambientMusic.pause();
+			chaseMusic.play();
+			//ambientMusic.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
+			//ambientMusic.playbackRate = 1 + 0.5 * scaleFactor
+		}
 		x = dir.x * scoopy.runSpeed;
 		y = dir.y * scoopy.runSpeed;
 		if (offset.length() < player.rad / 2) {
@@ -249,8 +256,12 @@ function moveScoopy() {
 		score -= scoopyScorePenalty;
 		running = true;
 	} else {
-		music.volume = quietVolume;
-		music.playbackRate = 1;
+		if (!chaseMusic.paused) {
+			chaseMusic.pause();
+			ambientMusic.play();
+			//ambientMusic.volume = quietVolume;
+			//ambientMusic.playbackRate = 1;
+		}
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 		// we want to bias Mr. Scoopy's walk towards the player
 		x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
