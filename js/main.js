@@ -302,7 +302,7 @@ function drawScreen() {
 	
 	if (lost) {
 		ctx.fillStyle = endTextColor;
-		ctx.font = "30pt Comic Sans MS";
+		ctx.font = "bold 30pt Comic Sans MS";
 		var textWidth = ctx.measureText(lossText).width;
 		ctx.fillText(lossText, (canvas.width - textWidth) / 2, 70);
 	}
