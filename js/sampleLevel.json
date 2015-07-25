@@ -18,9 +18,9 @@ var foo =
       "XXOOOOOOOOOOOOOOOXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXX"],
     "tiles": {
-      "X": {"image": "resources/images/wooden_floor.png", "collidable": true},
-      "O": {"image": "resources/images/kitchen_floor.png", "collidable": false}},
+      "X": {"image": "wooden_floor.png", "collidable": true},
+      "O": {"image": "kitchen_floor.png", "collidable": false}},
     "objects": {
-      "1": {"image": "resources/images/icecream/Chocolate.png", "floorTile": "O", "ontouch": "gainIceCream"}}
+      "1": {"image": "icecream/Chocolate.png", "floorTile": "O", "ontouch": "gainIceCream"}}
     }
   }

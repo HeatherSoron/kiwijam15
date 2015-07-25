@@ -3,7 +3,7 @@ function tileEngine(ctx){
 
   for(imgIndex in currentLevel.tiles){
     var image = new Image();
-    image.src = currentLevel.tiles[imgIndex].image
+    image.src = fullImagePath(currentLevel.tiles[imgIndex].image);
     imgArray[imgIndex] = image;
   }
 

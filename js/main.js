@@ -26,6 +26,10 @@ function init() {
 	startGame();
 }
 
+function fullImagePath(path) {
+	return "resources/images/" + path;
+}
+
 function processLevel(level) {
 	var processed = {};
 	for (var key in level) {
@@ -64,7 +68,24 @@ function startGame() {
 		pos: new Point(121, 121),
 		rad: 50,
 		scoopCount: 3,
+		frameCount: {
+			'r': 8,
+			'l': 8,
+		},
+		frame: 0,
+		frameDelay: 60,
+		currentFrameDelay: 0,
+		facing: 'r',
+		images: {
+			'r': 'Right',
+			'l': 'Left',
+		},
 	};
+	for (var facing in player.images) {
+		var image = new Image();
+		image.src = fullImagePath("characters/Alice_" + player.images[facing] + ".png");
+		player.images[facing] = image;
+	}
 	
 	scoopy = {
 		walkSpeed: 0.5,
@@ -88,6 +109,7 @@ function runGame() {
 	}
 	player.pos.offsetBy(player.vel.times(player.speed));
 	interactWithObjects();
+	animateAlice();
 	
 	moveScoopy();
 	drawScreen();
@@ -164,15 +186,11 @@ function drawScreen() {
 	
 	for (var i = 0; i < objects.length; ++i) {
 		var image = new Image();
-		image.src = objects[i].def.image;
+		image.src = fullImagePath(objects[i].def.image);
 		ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
 	}
 
-	ctx.fillStyle = '#BFFF00'; // lime green
-	ctx.beginPath();
-	// x, y, width, startAngle, endAngle, reverse
-	ctx.arc(player.pos.x, player.pos.y, player.rad, 0, 2 * Math.PI, false);
-	ctx.fill();
+	drawCharacter(player);
 
 	ctx.fillStyle = 'beige';
 	for (var i = 0; i < cones.length; ++i) {
@@ -195,4 +213,11 @@ function drawScreen() {
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+}
+
+function drawCharacter(char) {
+	
+	var image = char.images[char.facing];
+	var diam = char.rad * 2;
+	ctx.drawImage(image, diam * char.frame, 0, diam, diam, char.pos.x - char.rad, char.pos.y - char.rad, diam, diam);
 }
