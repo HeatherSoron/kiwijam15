@@ -1,32 +1,27 @@
 function tileEngine(ctx){
   var imgArray = [];
 
-  for(imgIndex in foo.level.tiles){
+  for(imgIndex in currentLevel.tiles){
     var image = new Image();
-    image.src = foo.level.tiles[imgIndex].image
-    imgArray.push(image);
+    image.src = currentLevel.tiles[imgIndex].image
+    imgArray[imgIndex] = image;
   }
 
-  for(rowIndex in foo.level.map){
-    var row = foo.level.map[rowIndex].split('');
+  for(rowIndex in currentLevel.map){
+    var row = currentLevel.map[rowIndex];
     for(columnIndex in row){
-      for(tileResource in foo.level.tiles){
-        if(foo.level.tiles[tileResource].symbol == row[columnIndex]){
-          ctx.drawImage(imgArray[tileResource], foo.level.tileSize*columnIndex, foo.level.tileSize*rowIndex);
-        }
-      }
+      var symbol = row[columnIndex];
+      ctx.drawImage(imgArray[symbol], currentLevel.tileSize*columnIndex, currentLevel.tileSize*rowIndex);
     }
   }
 }
 
 function isCollidable(x, y){
-  var tilex = Math.floor(x/foo.level.tileSize);
-  var tiley = Math.floor(y/foo.level.tileSize);
-  var tileSymbol = foo.level.map[tiley].split('')[tilex];
-  for(tileResource in foo.level.tiles){
-    if(foo.level.tiles[tileResource].symbol == tileSymbol){
-      return foo.level.tiles[tileResource].collidable;
-    }
+  var tilex = Math.floor(x/currentLevel.tileSize);
+  var tiley = Math.floor(y/currentLevel.tileSize);
+  var tileSymbol = currentLevel.map[tiley][tilex];
+  if (tileSymbol in currentLevel.tiles) {
+    return currentLevel.tiles[tileSymbol].collidable;
   }
   return false;
 }

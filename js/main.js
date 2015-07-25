@@ -9,6 +9,8 @@ var cones = [];
 
 var player;
 var scoopy;
+var currentLevel;
+var objects;
 
 var lost = false;
 
@@ -17,13 +19,44 @@ var frameDuration = 20;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
+	
 	resizeCanvas();
 	registerListeners();
 	
 	startGame();
 }
 
+function processLevel(level) {
+	var processed = {};
+	for (var key in level) {
+		processed[key] = level[key];
+	}
+	
+	for(rowIndex in processed.map) {
+		var row = processed.map[rowIndex].split('');
+		for (var colIndex in row) {
+			var symbol = row[colIndex];
+			if (symbol in processed.objects) {
+				var obj = processed.objects[symbol];
+				addObject(obj, colIndex, rowIndex, processed.tileSize);
+				row[colIndex] = obj.floorTile;
+			}
+		}
+		processed.map[rowIndex] = row;
+	}
+	return processed;
+}
+
+function addObject(objDef, x, y, tileSize) {
+	objects.push({
+		def: objDef,
+		pos: new Point(x * tileSize, y * tileSize),
+	});
+}
+
 function startGame() {
+	objects = [];
+	currentLevel = processLevel(foo.level);
 	player = {
 		speed: 3,
 		// velocity is not really a point, but it's an xy tuple
@@ -120,6 +153,12 @@ function drawScreen() {
 
 	//Draw map
 	tileEngine(ctx);
+	
+	for (var i = 0; i < objects.length; ++i) {
+		var image = new Image();
+		image.src = objects[i].def.image;
+		ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+	}
 
 	ctx.fillStyle = '#BFFF00'; // lime green
 	ctx.beginPath();

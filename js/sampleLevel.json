@@ -9,7 +9,7 @@ var foo =
       "XXOOOOOOOOOOOOOOOXXXXXX",
       "XXOOOOOOOOOOOOOOOOOOOXX",
       "XXOOOOXXXOOOOOOOOXXOOXX",
-      "XXXOOOXXOOOOOXXOOXXOOXX",
+      "XXXOCOXXOOOOOXXOOXXOOXX",
       "XXXOOXOOOOOOOOXXXXXOOXX",
       "XXXOOXOOOOOOOOOOOOOOOXX",
       "XXXOOXOOOOOOOXXXOOXXXXX",
@@ -17,8 +17,10 @@ var foo =
       "XXXOOXXXXOOOOOOOOXXXXXX",
       "XXOOOOOOOOOOOOOOOXXXXXX",
       "XXXXXXXXXXXXXXXXXXXXXXX"],
-    "tiles": [
-      {"image": "resources/images/wooden_floor.png", "symbol": "X", "collidable": true},
-      {"image": "resources/images/kitchen_floor.png", "symbol": "O", "collidable": false}]
+    "tiles": {
+      "X": {"image": "resources/images/wooden_floor.png", "collidable": true},
+      "O": {"image": "resources/images/kitchen_floor.png", "collidable": false}},
+    "objects": {
+      "C": {"image": "resources/images/square3.png", "floorTile": "O"}}
     }
   }
