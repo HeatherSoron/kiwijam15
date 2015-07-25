@@ -37,6 +37,7 @@ function fullImagePath(path) {
 }
 
 function processLevel(level) {
+	loadMap(level.mapFile);
 	var processed = {};
 	for (var key in level) {
 		processed[key] = level[key];
