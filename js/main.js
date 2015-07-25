@@ -317,7 +317,7 @@ function drawScreen() {
 		
 		var scoreText = scoreTextTemplate.replace(/%d/, score);
 		textWidth = ctx.measureText(scoreText).width;
-		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, 140);
+		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
 	}
 }
 
