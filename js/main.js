@@ -5,6 +5,10 @@ var gameLoop;
 // player-lengths
 var sightDist = 8;
 
+// lime green
+var endTextColor = 'rgb(0,255,0)';
+var lossText = "a sacrifice for mr. scoopy's eyes-cream";
+
 var cones;
 
 var player;
@@ -119,10 +123,12 @@ function startGame() {
 		frameCount: {
 			'l': 8,
 			'r': 8,
+			'd': 8,
 		},
 		frameCols: {
 			'l': 4,
 			'r': 4,
+			'd': 4,
 		},
 		frame: 0,
 		frameDelay: 60,
@@ -131,6 +137,7 @@ function startGame() {
 		images: {
 			'l': 'leftside',
 			'r': 'right',
+			'd': 'front',
 		},
 	};
 	for (var facing in scoopy.images) {
@@ -210,9 +217,7 @@ function moveScoopy() {
 		y = dir.y * scoopy.runSpeed;
 		if (offset.length() < player.rad / 2) {
 			if (cone === undefined) {
-				lost = true;
-				audio.stop;
-				clearInterval(gameLoop);
+				lose();
 			} else {
 				cones.splice(cone, 1);
 				scoopy.currentDelay = scoopy.eatDelay;
@@ -232,6 +237,13 @@ function moveScoopy() {
 	scoopy.pos.y += y;
 	
 	animateScoopy(x, y, running);
+}
+
+function lose() {	
+	lost = true;
+	audio.pause();
+	clearInterval(gameLoop);
+	drawScreen();
 }
 
 function resizeCanvas(e) {
@@ -274,7 +286,13 @@ function drawScreen() {
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+	
+	if (lost) {
+		ctx.fillStyle = endTextColor;
+		ctx.font = "30pt Comic Sans MS";
+		var textWidth = ctx.measureText(lossText).width;
+		ctx.fillText(lossText, (canvas.width - textWidth) / 2, 70);
+	}
 }
 
 function drawCharacter(char) {
