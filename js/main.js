@@ -11,7 +11,7 @@ var player = {
 	speed: 3,
 	// velocity is not really a point, but it's an xy tuple
 	vel: new Point(),
-	pos: new Point(50, 50),
+	pos: new Point(121, 121),
 	rad: 50
 }
 
@@ -31,16 +31,16 @@ var frameDuration = 20;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
-	
 	resizeCanvas();
-
 	registerListeners();
 
 	gameLoop = setInterval(runGame, frameDuration);
 }
 
 function runGame() {
-	player.pos.offsetBy(player.vel.times(player.speed));
+	if(!isCollidable((player.vel.times(player.speed).x + player.pos.x), (player.vel.times(player.speed).y + player.pos.y))){
+		player.pos.offsetBy(player.vel.times(player.speed));
+	}
 	moveScoopy();
 	drawScreen();
 }
@@ -100,7 +100,10 @@ function resizeCanvas(e) {
 }
 
 function drawScreen() {
+	ctx.save()
+
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.translate(-player.pos.x + canvas.width/2, -player.pos.y + canvas.height/2);
 
 	//Draw map
 	tileEngine(ctx);
@@ -123,12 +126,13 @@ function drawScreen() {
 	ctx.beginPath();
 	ctx.arc(scoopy.pos.x, scoopy.pos.y, scoopy.rad, 0, 2 * Math.PI, false);
 	ctx.fill();
-
-	var gradRef1 = player.pos;
-	var gradRef2 = player.pos;
+	ctx.restore();
+	var gradRef1 = new Point(canvas.width/2, canvas.height/2);
+	var gradRef2 = new Point(canvas.width/2, canvas.height/2);
 	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * 6, gradRef2.x, gradRef2.y, 25);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 }
