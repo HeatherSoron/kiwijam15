@@ -38,17 +38,20 @@ function init() {
 }
 
 function runGame() {
-	if(!isCollidable((player.vel.times(player.speed).x + player.pos.x), (player.vel.times(player.speed).y + player.pos.y))){
-		player.pos.offsetBy(player.vel.times(player.speed));
+	if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
+		player.vel.x = 0;
+	}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
+		player.vel.y = 0;
 	}
+	player.pos.offsetBy(player.vel.times(player.speed));
 	moveScoopy();
 	drawScreen();
 }
 
-function throwCone() {	
+function throwCone() {
 	var offset = scoopy.pos.minus(player.pos);
 	var dir = offset.normalize();
-	
+
 	var pos = dir.times(player.rad * 2).offsetBy(player.pos);
 	cones.push(pos);
 }
@@ -58,11 +61,11 @@ function moveScoopy() {
 		scoopy.currentDelay -= frameDuration;
 		return;
 	}
-	
+
 	var offset = player.pos.minus(scoopy.pos);
 	var playerDir = offset.normalize();
 	var cone = undefined;
-	
+
 	for (var i = 0; i < cones.length; ++i) {
 		var otherOffset = cones[i].minus(scoopy.pos);
 		if (otherOffset.length() < offset.length()) {
@@ -70,7 +73,7 @@ function moveScoopy() {
 			cone = i;
 		}
 	}
-	
+
 	var dir = offset.normalize();
 
 	if (offset.length() < player.rad * (sightDist - 1)) {
@@ -113,7 +116,7 @@ function drawScreen() {
 	// x, y, width, startAngle, endAngle, reverse
 	ctx.arc(player.pos.x, player.pos.y, player.rad, 0, 2 * Math.PI, false);
 	ctx.fill();
-	
+
 	ctx.fillStyle = 'beige';
 	for (var i = 0; i < cones.length; ++i) {
 		ctx.beginPath();
