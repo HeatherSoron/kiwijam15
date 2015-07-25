@@ -185,7 +185,6 @@ function runGame() {
 	} else {
 		gradOuterRad = Math.max(30, gradOuterRad - 3);
 		gradInnerRad = Math.max(0, gradInnerRad - 1);
-		ambientMusic.playbackRate = Math.min(2.3, ambientMusic.playbackRate + 0.005);
 	}
 	drawScreen();
 }
@@ -237,8 +236,6 @@ function moveScoopy() {
 		if (!ambientMusic.paused) {
 			ambientMusic.pause();
 			chaseMusic.play();
-			//ambientMusic.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
-			//ambientMusic.playbackRate = 1 + 0.5 * scaleFactor
 		}
 		x = dir.x * scoopy.runSpeed;
 		y = dir.y * scoopy.runSpeed;
@@ -256,8 +253,6 @@ function moveScoopy() {
 		if (!chaseMusic.paused) {
 			chaseMusic.pause();
 			ambientMusic.play();
-			//ambientMusic.volume = quietVolume;
-			//ambientMusic.playbackRate = 1;
 		}
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 		// we want to bias Mr. Scoopy's walk towards the player
