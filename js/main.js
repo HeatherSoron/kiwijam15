@@ -78,18 +78,21 @@ function startGame() {
 		frameCount: {
 			'r': 8,
 			'l': 8,
+			'd': 7,
 		},
 		frameCols: {
 			'r': 8,
 			'l': 8,
+			'd': 7,
 		},
 		frame: 0,
 		frameDelay: 60,
 		currentFrameDelay: 0,
-		facing: 'r',
+		facing: 'd',
 		images: {
 			'r': 'Right',
 			'l': 'Left',
+			'd': 'Front',
 		},
 	};
 	for (var facing in player.images) {
