@@ -21,6 +21,9 @@ var scoopy = {
 	wanderAngle: 0,
 	pos: new Point(70, 70),
 	rad: 100,
+	// delays in ms
+	currentDelay: 0,
+	eatDelay: 400,
 }
 
 var frameDuration = 20;
@@ -51,6 +54,11 @@ function throwCone() {
 }
 
 function moveScoopy() {
+	if (scoopy.currentDelay > 0) {
+		scoopy.currentDelay -= frameDuration;
+		return;
+	}
+	
 	var offset = player.pos.minus(scoopy.pos);
 	var playerDir = offset.normalize();
 	var cone = undefined;
@@ -73,6 +81,7 @@ function moveScoopy() {
 				// TODO lose the game
 			} else {
 				cones.splice(cone, 1);
+				scoopy.currentDelay = scoopy.eatDelay;
 			}
 		}
 	} else {
