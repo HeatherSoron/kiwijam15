@@ -8,21 +8,36 @@ function animateAlice() {
 		frameDelta = -1;
 	}
 	
+	animateFrame(player, frameDelta, 1);
+}
+
+function animateScoopy(x, y, running) {
+	var frameDelta = 0;
+	
+	if (x < 0) {
+		scoopy.facing = 'l';
+		frameDelta = 1;
+	}
+	
+	animateFrame(scoopy, frameDelta, running ? 1 : 0.3);
+}
+
+function animateFrame(char, frameDelta, timeMultiplier) {		
 	if (frameDelta) {
-		if (player.currentFrameDelay <= 0) {
+		if (char.currentFrameDelay <= 0) {
 			// modulus doesn't QUITE do what I want for negatives, so let's do it manually
-			var frameCount = player.frameCount[player.facing];
-			player.frame += frameDelta;
-			while (player.frame >= frameCount) {
-				player.frame -= frameCount;
+			var frameCount = char.frameCount[char.facing];
+			char.frame += frameDelta;
+			while (char.frame >= frameCount) {
+				char.frame -= frameCount;
 			}
-			while (player.frame < 0) {
-				player.frame += frameCount;
+			while (char.frame < 0) {
+				char.frame += frameCount;
 			}
 			
-			player.currentFrameDelay = player.frameDelay;
+			char.currentFrameDelay = char.frameDelay;
 		} else {
-			player.currentFrameDelay -= frameDuration;
+			char.currentFrameDelay -= frameDuration * timeMultiplier;
 		}
 	}
 }

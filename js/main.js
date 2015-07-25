@@ -72,6 +72,10 @@ function startGame() {
 			'r': 8,
 			'l': 8,
 		},
+		frameCols: {
+			'r': 8,
+			'l': 8,
+		},
 		frame: 0,
 		frameDelay: 60,
 		currentFrameDelay: 0,
@@ -96,6 +100,24 @@ function startGame() {
 		// delays in ms
 		currentDelay: 0,
 		eatDelay: 700,
+		frameCount: {
+			'l': 8,
+		},
+		frameCols: {
+			'l': 4,
+		},
+		frame: 0,
+		frameDelay: 60,
+		currentFrameDelay: 0,
+		facing: 'l',
+		images: {
+			'l': 'left',
+		},
+	};
+	for (var facing in scoopy.images) {
+		var image = new Image();
+		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "side_sprite.png");
+		scoopy.images[facing] = image;
 	}
 
 	gameLoop = setInterval(runGame, frameDuration);
@@ -147,10 +169,13 @@ function moveScoopy() {
 	}
 
 	var dir = offset.normalize();
-
+	
+	var x = 0;
+	var y = 0;
+	var running = false;
 	if (offset.length() < player.rad * (sightDist - 1)) {
-		scoopy.pos.x += dir.x * scoopy.runSpeed;
-		scoopy.pos.y += dir.y * scoopy.runSpeed;
+		x = dir.x * scoopy.runSpeed;
+		y = dir.y * scoopy.runSpeed;
 		if (offset.length() < player.rad / 2) {
 			if (cone === undefined) {
 				lost = true;
@@ -160,14 +185,18 @@ function moveScoopy() {
 				scoopy.currentDelay = scoopy.eatDelay;
 			}
 		}
+		running = true;
 	} else {
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 		// we want to bias Mr. Scoopy's walk towards the player
-		var x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
-		var y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
-		scoopy.pos.x += x;
-		scoopy.pos.y += y;
+		x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
+		y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
 	}
+	
+	scoopy.pos.x += x;
+	scoopy.pos.y += y;
+	
+	animateScoopy(x, y, running);
 }
 
 function resizeCanvas(e) {
@@ -199,11 +228,9 @@ function drawScreen() {
 		ctx.arc(pos.x, pos.y, 20, 0, 2 * Math.PI, false);
 		ctx.fill();
 	}
+	
+	drawCharacter(scoopy);
 
-	ctx.fillStyle = 'rgb(255,0,0)';
-	ctx.beginPath();
-	ctx.arc(scoopy.pos.x, scoopy.pos.y, scoopy.rad, 0, 2 * Math.PI, false);
-	ctx.fill();
 	ctx.restore();
 	var gradRef1 = new Point(canvas.width/2, canvas.height/2);
 	var gradRef2 = new Point(canvas.width/2, canvas.height/2);
@@ -216,8 +243,10 @@ function drawScreen() {
 }
 
 function drawCharacter(char) {
-	
 	var image = char.images[char.facing];
 	var diam = char.rad * 2;
-	ctx.drawImage(image, diam * char.frame, 0, diam, diam, char.pos.x - char.rad, char.pos.y - char.rad, diam, diam);
+	var frameColCount = char.frameCols[char.facing];
+	var frameCol = char.frame % frameColCount;
+	var frameRow = Math.floor(char.frame / frameColCount);
+	ctx.drawImage(image, diam * frameCol, diam * frameRow, diam, diam, char.pos.x - char.rad, char.pos.y - char.rad, diam, diam);
 }
