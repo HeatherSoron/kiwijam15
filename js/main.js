@@ -5,6 +5,8 @@ var gameLoop;
 // player-lengths
 var sightDist = 6;
 
+var cones = [];
+
 var player = {
 	speed: 4,
 	// velocity is not really a point, but it's an xy tuple
@@ -40,18 +42,44 @@ function runGame() {
 	drawScreen();
 }
 
+function throwCone() {	
+	var offset = scoopy.pos.minus(player.pos);
+	var dir = offset.normalize();
+	
+	var pos = dir.times(player.rad * 2).offsetBy(player.pos);
+	cones.push(pos);
+}
+
 function moveScoopy() {
 	var offset = player.pos.minus(scoopy.pos);
+	var playerDir = offset.normalize();
+	var cone = undefined;
+	
+	for (var i = 0; i < cones.length; ++i) {
+		var otherOffset = cones[i].minus(scoopy.pos);
+		if (otherOffset.length() < offset.length()) {
+			offset = otherOffset;
+			cone = i;
+		}
+	}
+	
 	var dir = offset.normalize();
 
 	if (offset.length() < player.rad * (sightDist - 1)) {
 		scoopy.pos.x += dir.x * scoopy.runSpeed;
 		scoopy.pos.y += dir.y * scoopy.runSpeed;
+		if (offset.length() < player.rad / 2) {
+			if (cone === undefined) {
+				// TODO lose the game
+			} else {
+				cones.splice(cone, 1);
+			}
+		}
 	} else {
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 		// we want to bias Mr. Scoopy's walk towards the player
-		var x = (Math.cos(scoopy.wanderAngle) + dir.x) / 2 * scoopy.walkSpeed;
-		var y = (Math.sin(scoopy.wanderAngle) + dir.y) / 2 * scoopy.walkSpeed;
+		var x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
+		var y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
 		scoopy.pos.x += x;
 		scoopy.pos.y += y;
 	}
@@ -73,6 +101,14 @@ function drawScreen() {
 	// x, y, width, startAngle, endAngle, reverse
 	ctx.arc(player.pos.x, player.pos.y, player.rad, 0, 2 * Math.PI, false);
 	ctx.fill();
+	
+	ctx.fillStyle = 'beige';
+	for (var i = 0; i < cones.length; ++i) {
+		ctx.beginPath();
+		var pos = cones[i];
+		ctx.arc(pos.x, pos.y, 20, 0, 2 * Math.PI, false);
+		ctx.fill();
+	}
 
 	ctx.fillStyle = 'rgb(255,0,0)';
 	ctx.beginPath();

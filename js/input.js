@@ -1,4 +1,6 @@
 var keys = {
+	'space': 32,
+	
 	'left': 37,
 	'right': 39,
 	
@@ -17,6 +19,10 @@ function registerListeners() {
 
 function handleKeyDown(e) {
 	switch (e.keyCode) {
+		case keys.space:
+			throwCone();
+			e.preventDefault();
+			break;
 		case keys.left:
 			player.vel.x = -1;
 			e.preventDefault();
