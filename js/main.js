@@ -16,6 +16,9 @@ var scoopy;
 var currentLevel;
 var objects;
 
+var gradOuterRad;
+var gradInnerRad;
+
 var music;
 
 var lost = false;
@@ -34,6 +37,8 @@ function init() {
 	registerListeners();
 	
 	startGame();
+	
+	gameLoop = setInterval(runGame, frameDuration);
 }
 
 function fullImagePath(path) {
@@ -146,25 +151,33 @@ function startGame() {
 		scoopy.images[facing] = image;
 	}
 	
+	gradOuterRad = player.rad * sightDist;
+	gradInnerRad = 25;
+	
 	audio = new Audio('resources/music/GameJamGREEN_1.mp3');
 	audio.loop = true;
 	audio.volume = quietVolume;
 	audio.play();
-
-	gameLoop = setInterval(runGame, frameDuration);
 }
 
 function runGame() {
-	if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
-		player.vel.x = 0;
-	}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
-		player.vel.y = 0;
-	}
-	player.pos.offsetBy(player.vel.times(player.speed));
-	interactWithObjects();
-	animateAlice();
+	if (!lost) {
+		if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
+			player.vel.x = 0;
+		}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
+			player.vel.y = 0;
+		}
+		player.pos.offsetBy(player.vel.times(player.speed));
+		interactWithObjects();
+		animateAlice();
 	
-	moveScoopy();
+		moveScoopy();
+	} else {
+		gradOuterRad = Math.max(30, gradOuterRad - 3);
+		gradInnerRad = Math.max(0, gradInnerRad - 1);
+		audio.playbackRate = Math.min(2.3, audio.playbackRate + 0.005);
+	}
+	
 	drawScreen();
 }
 
@@ -239,10 +252,10 @@ function moveScoopy() {
 	animateScoopy(x, y, running);
 }
 
-function lose() {	
+function lose() {
 	lost = true;
-	audio.pause();
-	clearInterval(gameLoop);
+	// TODO decide if we want to stop the music from multi-playing after loss...
+	//audio.pause();
 	drawScreen();
 }
 
@@ -281,7 +294,7 @@ function drawScreen() {
 	ctx.restore();
 	var gradRef1 = new Point(canvas.width/2, canvas.height/2);
 	var gradRef2 = new Point(canvas.width/2, canvas.height/2);
-	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, player.rad * sightDist, gradRef2.x, gradRef2.y, 25);
+	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, gradOuterRad, gradRef2.x, gradRef2.y, gradInnerRad);
 	gradient.addColorStop(0,"rgba(0,0,0,1)");
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
