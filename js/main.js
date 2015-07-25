@@ -38,7 +38,7 @@ var volumeScaleRate = 0.6;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
-	
+
 	resizeCanvas();
 	registerListeners();
 	
@@ -49,8 +49,6 @@ function init() {
 	chaseMusic.loop = true;
 	
 	startGame();
-	
-	
 	gameLoop = setInterval(runGame, frameDuration);
 }
 
@@ -64,7 +62,7 @@ function processLevel(level) {
 	for (var key in level) {
 		processed[key] = level[key];
 	}
-	
+
 	processed.map = [];
 	for(rowIndex in level.map) {
 		var row = level.map[rowIndex].split('');
@@ -129,7 +127,7 @@ function startGame() {
 		image.src = fullImagePath("characters/Alice_" + player.images[facing] + ".png");
 		player.images[facing] = image;
 	}
-	
+
 	scoopy = {
 		walkSpeed: 2.5,
 		runSpeed: 3.1,
@@ -164,7 +162,7 @@ function startGame() {
 		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "_sprite.png");
 		scoopy.images[facing] = image;
 	}
-	
+
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
 	
@@ -182,14 +180,13 @@ function runGame() {
 		player.pos.offsetBy(player.vel.times(player.speed));
 		interactWithObjects();
 		animateAlice();
-	
+
 		moveScoopy();
 	} else {
 		gradOuterRad = Math.max(30, gradOuterRad - 3);
 		gradInnerRad = Math.max(0, gradInnerRad - 1);
 		ambientMusic.playbackRate = Math.min(2.3, ambientMusic.playbackRate + 0.005);
 	}
-	
 	drawScreen();
 }
 
@@ -229,7 +226,7 @@ function moveScoopy() {
 	}
 
 	var dir = offset.normalize();
-	
+
 	var x = 0;
 	var y = 0;
 	var running = false;
@@ -268,10 +265,15 @@ function moveScoopy() {
 		y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
 		score += player.scoopCount * scorePerScoopFrame;
 	}
-	
+
+	if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
+		x = 0;
+	}else if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
+		y = 0;
+	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
-	
+
 	animateScoopy(x, y, running);
 }
 
@@ -293,7 +295,7 @@ function drawScreen() {
 
 	//Draw map
 	tileEngine(ctx);
-	
+
 	for (var i = 0; i < objects.length; ++i) {
 		var image = new Image();
 		image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
@@ -309,7 +311,7 @@ function drawScreen() {
 		ctx.arc(pos.x, pos.y, 20, 0, 2 * Math.PI, false);
 		ctx.fill();
 	}
-	
+
 	drawCharacter(scoopy);
 
 	ctx.restore();
@@ -320,14 +322,14 @@ function drawScreen() {
 	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	
+
 	if (lost) {
 		ctx.fillStyle = endTextColor;
 		ctx.font = "bold 30pt Comic Sans MS";
-		
+
 		var textWidth = ctx.measureText(lossText).width;
 		ctx.fillText(lossText, (canvas.width - textWidth) / 2, 70);
-		
+
 		var scoreText = scoreTextTemplate.replace(/%d/, score);
 		textWidth = ctx.measureText(scoreText).width;
 		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);

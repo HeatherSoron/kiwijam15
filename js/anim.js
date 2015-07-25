@@ -3,23 +3,20 @@ function animateAlice() {
 	if (player.vel.y > 0) {
 		player.facing = 'd';
 		frameDelta = 1;
-	} else if (player.vel.y < 0) {
-		player.facing = 'u';
-		frameDelta = 1;
-	} else if (player.vel.x > 0) {
+	}else if (player.vel.x > 0) {
 		player.facing = 'r';
 		frameDelta = 1;
 	} else if (player.vel.x < 0) {
 		player.facing = 'l';
 		frameDelta = -1;
 	}
-	
+
 	animateFrame(player, frameDelta, 1);
 }
 
 function animateScoopy(x, y, running) {
 	var frameDelta = 0;
-	
+
 	if (Math.abs(y) > Math.abs(x)) {
 		if (y > 0) {
 			scoopy.facing = 'd';
@@ -34,7 +31,7 @@ function animateScoopy(x, y, running) {
 			frameDelta = 1;
 		}
 	}
-	
+
 	animateFrame(scoopy, frameDelta, running ? 1 : 0.3);
 }
 
@@ -50,7 +47,7 @@ function animateFrame(char, frameDelta, timeMultiplier) {
 			while (char.frame < 0) {
 				char.frame += frameCount;
 			}
-			
+
 			char.currentFrameDelay = char.frameDelay;
 		} else {
 			char.currentFrameDelay -= frameDuration * timeMultiplier;
