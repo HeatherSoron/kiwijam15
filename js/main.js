@@ -17,10 +17,19 @@ var frameDuration = 20;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
+	
 	resizeCanvas();
 	registerListeners();
 	
+	processLevel(foo.level);
 	startGame();
+}
+
+function processLevel(level) {
+	for(rowIndex in level.map){
+		var row = level.map[rowIndex];
+		level.map[rowIndex] = row;
+	}
 }
 
 function startGame() {
