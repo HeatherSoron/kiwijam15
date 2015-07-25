@@ -11,7 +11,7 @@ var lossText = "a sacrifice for mr. scoopy's eyes-cream";
 var scoreTextTemplate = "your value: %d";
 
 var score;
-var scoopyScorePenalty = 50;
+var scoopyScorePenalty = 30;
 var scorePerScoopFrame = 1;
 
 var cones;
