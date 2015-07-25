@@ -10,6 +10,7 @@ var cones = [];
 var player;
 var scoopy;
 var currentLevel;
+var objects;
 
 var lost = false;
 
@@ -36,7 +37,9 @@ function processLevel(level) {
 		for (var colIndex in row) {
 			var symbol = row[colIndex];
 			if (symbol in processed.objects) {
-				row[colIndex] = processed.objects[symbol].floorTile;
+				var obj = processed.objects[symbol];
+				addObject(obj, colIndex, rowIndex, processed.tileSize);
+				row[colIndex] = obj.floorTile;
 			}
 		}
 		processed.map[rowIndex] = row;
@@ -44,7 +47,15 @@ function processLevel(level) {
 	return processed;
 }
 
+function addObject(objDef, x, y, tileSize) {
+	objects.push({
+		def: objDef,
+		pos: new Point(x * tileSize, y * tileSize),
+	});
+}
+
 function startGame() {
+	objects = [];
 	currentLevel = processLevel(foo.level);
 	player = {
 		speed: 3,
@@ -142,6 +153,12 @@ function drawScreen() {
 
 	//Draw map
 	tileEngine(ctx);
+	
+	for (var i = 0; i < objects.length; ++i) {
+		var image = new Image();
+		image.src = objects[i].def.image;
+		ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+	}
 
 	ctx.fillStyle = '#BFFF00'; // lime green
 	ctx.beginPath();
