@@ -160,10 +160,14 @@ function startGame() {
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
 	
-	audio = new Audio('resources/music/GameJamGREEN_1.mp3');
-	audio.loop = true;
-	audio.volume = quietVolume;
-	audio.play();
+	if (music) {
+		music.pause();
+	}
+	
+	music = new Audio('resources/music/GameJamGREEN_1.mp3');
+	music.loop = true;
+	music.volume = quietVolume;
+	music.play();
 }
 
 function runGame() {
@@ -181,7 +185,7 @@ function runGame() {
 	} else {
 		gradOuterRad = Math.max(30, gradOuterRad - 3);
 		gradInnerRad = Math.max(0, gradInnerRad - 1);
-		audio.playbackRate = Math.min(2.3, audio.playbackRate + 0.005);
+		music.playbackRate = Math.min(2.3, music.playbackRate + 0.005);
 	}
 	
 	drawScreen();
@@ -230,8 +234,8 @@ function moveScoopy() {
 	var chaseDistance = player.rad * (sightDist - 3);
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
-		audio.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
-		audio.playbackRate = 1 + 0.5 * scaleFactor
+		music.volume = baseLoudVolume + volumeScaleRate * scaleFactor;
+		music.playbackRate = 1 + 0.5 * scaleFactor
 		x = dir.x * scoopy.runSpeed;
 		y = dir.y * scoopy.runSpeed;
 		if (offset.length() < player.rad / 2) {
@@ -245,8 +249,8 @@ function moveScoopy() {
 		score -= scoopyScorePenalty;
 		running = true;
 	} else {
-		audio.volume = quietVolume;
-		audio.playbackRate = 1;
+		music.volume = quietVolume;
+		music.playbackRate = 1;
 		scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 		// we want to bias Mr. Scoopy's walk towards the player
 		x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
@@ -262,8 +266,6 @@ function moveScoopy() {
 
 function lose() {
 	lost = true;
-	// TODO decide if we want to stop the music from multi-playing after loss...
-	//audio.pause();
 	drawScreen();
 }
 
