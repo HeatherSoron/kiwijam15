@@ -20,6 +20,9 @@ function animateScoopy(x, y, running) {
 	if (x < 0) {
 		scoopy.facing = 'l';
 		frameDelta = 1;
+	} else if (x > 0) {
+		scoopy.facing = 'r';
+		frameDelta = 1;
 	}
 	
 	animateFrame(scoopy, frameDelta, running ? 1 : 0.3);

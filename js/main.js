@@ -112,21 +112,24 @@ function startGame() {
 		eatDelay: 700,
 		frameCount: {
 			'l': 8,
+			'r': 8,
 		},
 		frameCols: {
 			'l': 4,
+			'r': 4,
 		},
 		frame: 0,
 		frameDelay: 60,
 		currentFrameDelay: 0,
 		facing: 'l',
 		images: {
-			'l': 'left',
+			'l': 'leftside',
+			'r': 'right',
 		},
 	};
 	for (var facing in scoopy.images) {
 		var image = new Image();
-		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "side_sprite.png");
+		image.src = fullImagePath("characters/scoopy_" + scoopy.images[facing] + "_sprite.png");
 		scoopy.images[facing] = image;
 	}
 	
