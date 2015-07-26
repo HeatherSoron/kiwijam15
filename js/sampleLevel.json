@@ -20,8 +20,10 @@ var foo =
       "XXXXXXXXXXXXXXXXXXXXXXX"],*/
     "tiles": {
       "0,0,0": {"image": "textures/white_wall.png", "collidable": true},
-      "128,64,64": {"image": "wooden_floor.png", "collidable": true},
-      "255,255,255": {"image": "textures/empty_space.png", "collidable": true}},
+      "128,64,64": {"image": "wooden_floor.png", "collidable": false},
+      "255,255,255": {"image": "textures/empty_space.png", "collidable": true},
+      "0,128,255": {"image": "textures/kitchen_floor.png", "collidable": false},
+      "0,255,255": {"image": "textures/dirty_floor.png", "collidable": false}},
     "objects": {
       "0,255,0": {
         "images": [

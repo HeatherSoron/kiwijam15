@@ -6,7 +6,7 @@ RGB values:
 128,64, 0: gym bench not front
 0, 255, 0: gym bench front
 0, 128, 255: kitchen tile
-0, 255, 255: pantry tile
+0, 255, 255: dirty floor
 Kitchen bench 1
 Kitchen bench 2
 Kitchen bench 3
