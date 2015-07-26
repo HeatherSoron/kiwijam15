@@ -14,7 +14,7 @@ var score;
 var scoopyScorePenalty = 30;
 var scorePerScoopFrame = 1;
 
-var iceCreamSpawnChance = 1.0 / 30;
+var iceCreamSpawnChance = 1.0 / 50;
 
 var cones;
 
