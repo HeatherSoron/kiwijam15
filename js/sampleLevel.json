@@ -36,13 +36,11 @@ var foo =
           "textures/Countertop1.png",
         ],
         "floorTile": "0,128,254"},
-      },
       "199,199,199": {
         "images": [
           "textures/Countertop2.png",
         ],
         "floorTile": "0,128,254"},
-      },
       "0,255,0": {
         "images": [
           "Glow_Ice/IceCream_Glow0000.png",
