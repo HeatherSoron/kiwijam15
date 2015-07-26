@@ -26,6 +26,21 @@ var gradInnerRad;
 
 var chaseMusic;
 var ambientMusic;
+var sfx = {
+	"death": "Eyeball_scooping.wav",
+	"throwCone": "Ice_cream_drop.wav",
+	"distract": "Scoopy_eats_ice_cream.wav",
+	"ambient": [
+		"scoopy_eyes_cream.wav",
+		"scoopy_grumble_1.wav",
+		"scoopy_grumble_2.wav",
+		"scoopy_grumble_3.wav",
+		"scoopy_sacrifice.wav",
+		"scoopy_sundae_drive.wav",
+		"scoopy_searching_come_out.wav",
+		"scoopy_searching_where_are_you.wav",
+	],
+}
 
 var lost = false;
 var creditsPlaying = false;
@@ -33,9 +48,9 @@ var creditY = 0;
 
 var frameDuration = 20;
 
-var quietVolume = 1.0;
-var baseLoudVolume = 0.4;
-var volumeScaleRate = 0.6;
+// the music is set to a different loudness than the sfx
+// so, need to make them closer to the same loudness
+var musicVolume = 0.15;
 
 function init() {
 	canvas = document.getElementById('kiwijam');
@@ -49,6 +64,19 @@ function init() {
 
 	chaseMusic = new Audio('resources/music/GameJamCHASE_Celli&Glock.mp3');
 	chaseMusic.loop = true;
+	chaseMusic.volume = musicVolume;
+	
+	for (var key in sfx) {
+		if (typeof sfx[key] == 'object') {
+			for (var index in sfx[key]) {
+				var audio = new Audio('resources/sfx/' + sfx[key][index]);
+				sfx[key][index] = audio;
+			}
+		} else {
+			var audio = new Audio('resources/sfx/' + sfx[key]);
+			sfx[key] = audio;
+		}
+	}
 
 	creditY = canvas.height + 50;
 	startGame();
@@ -172,7 +200,7 @@ function startGame() {
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
 
-	ambientMusic.volume = quietVolume;
+	ambientMusic.volume = musicVolume;
 	ambientMusic.play();
 }
 
@@ -200,6 +228,7 @@ function throwCone() {
 		return false;
 	}
 	player.scoopCount--;
+	sfx.throwCone.play();
 	var offset = scoopy.pos.minus(player.pos);
 	var dir = offset.normalize();
 
@@ -249,6 +278,7 @@ function moveScoopy() {
 			if (cone === undefined) {
 				lose();
 			} else {
+				sfx.distract.play();
 				cones.splice(cone, 1);
 				scoopy.currentDelay = scoopy.eatDelay;
 			}
@@ -280,6 +310,7 @@ function moveScoopy() {
 
 function lose() {
 	lost = true;
+	sfx.death.play();
 	drawScreen();
 }
 
