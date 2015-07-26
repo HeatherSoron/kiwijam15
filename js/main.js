@@ -14,6 +14,8 @@ var score;
 var scoopyScorePenalty = 30;
 var scorePerScoopFrame = 1;
 
+var creditStartDelay;
+
 var cones;
 var splatImage;
 
@@ -228,6 +230,8 @@ function startGame() {
 
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
+	
+	creditStartDelay = 1000;
 
 	ambientMusic.volume = musicVolume;
 	ambientMusic.play();
@@ -249,6 +253,12 @@ function runGame() {
 	} else {
 		gradOuterRad = Math.max(30, gradOuterRad - 3);
 		gradInnerRad = Math.max(0, gradInnerRad - 1);
+		if (gradOuterRad <= 30) {
+			creditStartDelay -= frameDuration;
+			if (creditStartDelay < 0) {
+				creditsPlaying = true;
+			}
+		}
 	}
 	drawScreen();
 }
@@ -401,7 +411,7 @@ function drawScreen() {
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-	if (lost) {
+	if (lost && !creditsPlaying) {
 		ctx.textAlign="left";
 		ctx.fillStyle = endTextColor;
 		ctx.font = "bold 30pt Comic Sans MS";
