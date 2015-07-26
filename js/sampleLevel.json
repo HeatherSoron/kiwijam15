@@ -58,103 +58,113 @@ var foo =
           "Glow_Ice/IceCream_Glow0132.png",
           "Glow_Ice/IceCream_Glow0140.png"
         ],
-        "floorTile": "136,0,21",
+        "floorTile": "136,0,20",
         "ontouch": "gainIceCream"},
       "200,200,200": {
         "images": [
           "finaltexturelist/Countertop1.png",
         ],
-        "floorTile": "0,128,255"},
+        "floorTile": "0,128,254"},
       "199,199,199": {
         "images": [
           "finaltexturelist/Countertop2.png",
         ],
-        "floorTile": "0,128,255"},
+        "floorTile": "0,128,254"},
       "198,198,198": {
         "images": [
           "finaltexturelist/Countertop2.png",
         ],
-        "floorTile": "0,128,255"},
+        "floorTile": "0,128,254"},
       "201,0,100": {
         "images": [
           "finaltexturelist/Fridge.png",
         ],
-        "floorTile": "167,181,70"},
+        "floorTile": "0,128,254"},
       "150,10,0": {
         "images": [
           "finaltexturelist/Sink.png",
         ],
-        "floorTile": "0,128,255"},
+        "floorTile": "0,128,254"},
       "128,128,64": {
         "images": [
           "finaltexturelist/bookshelf_right.png",
         ],
-        "floorTile": "64,0,0"},
+        "floorTile": "64,0,1"},
       "127,128,64": {
         "images": [
           "finaltexturelist/bookshelf_front.png",
         ],
-        "floorTile": "64,0,0"},
+        "floorTile": "64,0,1"},
       "126,128,64": {
         "images": [
           "finaltexturelist/bookshelf_left.png",
         ],
-        "floorTile": "64,0,0"},
+        "floorTile": "64,0,1"},
       "125,128,64": {
         "images": [
           "finaltexturelist/bookshelf_centre.png",
         ],
-        "floorTile": "64,0,0"},
+        "floorTile": "64,0,1"},
       "0,64,64": {
         "images": [
           "finaltexturelist/toilet_2.png",
         ],
-        "floorTile": "167,181,70"},
+        "floorTile": "167,181,69"},
       "64,0,64": {
         "images": [
           "finaltexturelist/toilet_sink.png",
         ],
-        "floorTile": "167,181,70"},
+        "floorTile": "167,181,69"},
       "0,0,64": {
         "images": [
           "finaltexturelist/Cafeteria.png",
         ],
-        "floorTile": "167,181,70"},
+        "floorTile": "167,181,69"},
       "64,0,128": {
         "images": [
           "finaltexturelist/KitchenIsland.png",
         ],
-        "floorTile": "167,181,70"},
+        "floorTile": "167,181,69"},
       "255,128,192": {
         "images": [
           "finaltexturelist/desk_3.png",
         ],
-        "floorTile": "0,64,128"},
+        "floorTile": "0,64,127"},
       "50,0,50": {
         "images": [
           "finaltexturelist/sick_bay_bed.png",
         ],
-        "floorTile": "128,128,255"},
+        "floorTile": "128,128,254"},
       "10,0,10": {
         "images": [
           "finaltexturelist/medical_cabinet.png",
         ],
-        "floorTile": "128,128,255"},
+        "floorTile": "128,128,254"},
       "79,172,163": {
         "images": [
           "finaltexturelist/Easel.png",
         ],
-        "floorTile": "128,128,255"},
+        "floorTile": "128,128,254"},
       "174,140,77": {
         "images": [
           "finaltexturelist/ArtTable1.png",
         ],
-        "floorTile": "128,128,255"},
+        "floorTile": "128,128,254"},
       "83,108,168": {
         "images": [
           "finaltexturelist/ArtSink.png",
         ],
-        "floorTile": "128,128,255"}
+        "floorTile": "128,128,254"},
+    "132,214,107": {
+        "images": [
+          "finaltexturelist/Fridge.png",
+        ],
+        "floorTile": "0,128,254"},
+    "128,64,0": {
+        "images": [
+          "finaltexturelist/bench_big.png",
+        ],
+        "floorTile": "128,64,63"}
       }
     }
   }
