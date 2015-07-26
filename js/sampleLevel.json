@@ -5,6 +5,7 @@ var foo =
     "tileSize": "60", //square
     "mapFile": "resources/map_sketches/map_full.png", // placeholder for testing purposes
     "tiles": {
+      //floor tiles
       "0,255,255": {"image": "textures/dirty_floor.png", "collidable": false},
       "128,64,64": {"image": "textures/Wood_floor.png", "collidable": false},
       "0,128,255": {"image": "textures/Kitchen_floor.png", "collidable": false},
@@ -14,9 +15,34 @@ var foo =
       "128,128,255": {"image": "textures/concrete_wall_floor.png", "collidable": false},
       "167,181,70": {"image": "textures/dirty_floor.png", "collidable": false},
       "64,0,0": {"image": "textures/carpet_blue_light.png", "collidable": false},
+
+      //floor blocked tiles
+      "0,255,254": {"image": "textures/dirty_floor.png", "collidable": false},
+      "128,64,63": {"image": "textures/Wood_floor.png", "collidable": false},
+      "0,128,254": {"image": "textures/Kitchen_floor.png", "collidable": false},
+      "0,64,127": {"image": "textures/carpet_floorBlue.png", "collidable": false},
+      "255,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": false},
+      "255,127,38": {"image": "textures/wood_floor_light.png", "collidable": false},
+      "128,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": false},
+      "167,181,69": {"image": "textures/dirty_floor.png", "collidable": false},
+      "64,0,1": {"image": "textures/carpet_blue_light.png", "collidable": false},
+
+      //blocked tiles
       "255,255,255": {"image": "textures/emptyspace.png", "collidable": true},
       "0,0,0": {"image": "textures/Wood_floor_dark.png", "collidable": true}},
     "objects": {
+      "200,200,200": {
+        "images": [
+          "textures/Countertop1.png",
+        ],
+        "floorTile": "0,128,254"},
+      },
+      "199,199,199": {
+        "images": [
+          "textures/Countertop2.png",
+        ],
+        "floorTile": "0,128,254"},
+      },
       "0,255,0": {
         "images": [
           "Glow_Ice/IceCream_Glow0000.png",
