@@ -15,6 +15,7 @@ var scoopyScorePenalty = 30;
 var scorePerScoopFrame = 1;
 
 var creditStartDelay;
+var iceCreamSpawnChance = 1.0 / 50;
 
 var cones;
 var splatImage;
@@ -61,7 +62,7 @@ var musicVolume = 0.15;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
-	
+
 	splatImage = new Image();
 	splatImage.src = fullImagePath("SplatDetailed.png");
 
@@ -73,8 +74,11 @@ function init() {
 
 	chaseMusic = new Audio('resources/music/GameJamCHASE_Celli&Glock.mp3');
 	chaseMusic.loop = true;
+// <<<<<<< HEAD
+//
+// =======
 	chaseMusic.volume = musicVolume;
-	
+
 	for (var key in sfx) {
 		if (typeof sfx[key] == 'object') {
 			for (var index in sfx[key]) {
@@ -86,7 +90,6 @@ function init() {
 			sfx[key] = audio;
 		}
 	}
-
 	startGame();
 	gameLoop = setInterval(runGame, frameDuration);
 }
@@ -108,36 +111,13 @@ function isSfxPlaying() {
 	return false;
 }
 
-function playRandomAudio(arr) {	
+function playRandomAudio(arr) {
 	var randIndex = Math.floor(Math.random() * arr.length);
 	arr[randIndex].play();
 }
 
 function fullImagePath(path) {
 	return "resources/images/" + path;
-}
-
-function processLevel(level) {
-	loadMap(level.mapFile);
-	var processed = {};
-	for (var key in level) {
-		processed[key] = level[key];
-	}
-
-	processed.map = [];
-	for(rowIndex in level.map) {
-		var row = level.map[rowIndex].split('');
-		for (var colIndex in row) {
-			var symbol = row[colIndex];
-			if (symbol in level.objects) {
-				var obj = level.objects[symbol];
-				addObject(obj, colIndex, rowIndex, level.tileSize);
-				row[colIndex] = obj.floorTile;
-			}
-		}
-		processed.map[rowIndex] = row;
-	}
-	return processed;
 }
 
 function addObject(objDef, x, y, tileSize) {
@@ -152,12 +132,15 @@ function startGame() {
 	score = 0;
 	objects = [];
 	cones = [];
-	currentLevel = processLevel(foo.level);
+	// currentLevel = processLevel(foo.level);
+
+	loadMapInit();
+
 	player = {
-		speed: 3,
+		speed: 5,
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
-		pos: new Point(121, 121),
+		pos: new Point(4800, 900),
 		rad: 50,
 		scoopCount: 3,
 		frameCount: {
@@ -190,12 +173,12 @@ function startGame() {
 	}
 
 	scoopy = {
-		walkSpeed: 2.5,
-		runSpeed: 3.1,
+		walkSpeed: 4,
+		runSpeed: 5.2,
 		// amount that Mr. Scoopy slows down when forcing his way through walls
 		slowdown: 4.0,
 		wanderAngle: 0,
-		pos: new Point(500, 200),
+		pos: new Point(3600, 1260),
 		rad: 100,
 		// delays in ms
 		currentDelay: 0,
@@ -236,7 +219,11 @@ function startGame() {
 	creditsPlaying = false;
 	creditY = canvas.height + 50;
 
+// <<<<<<< HEAD
 	ambientMusic.volume = musicVolume;
+// =======
+// 	ambientMusic.volume = musicVolume;
+// >>>>>>> e9e6dae0486b5bf1440547c508e12082efdc2f2e
 	ambientMusic.play();
 }
 
@@ -248,7 +235,7 @@ function runGame() {
 		if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
 			player.vel.y = 0;
 		}
-		player.pos.offsetBy(player.vel.times(player.speed));
+		player.pos.offsetBy(player.vel.normalize().times(player.speed));
 		interactWithObjects();
 		animateAlice();
 
@@ -264,6 +251,7 @@ function runGame() {
 		}
 	}
 	drawScreen();
+
 }
 
 function throwCone() {
@@ -350,7 +338,7 @@ function moveScoopy() {
 	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
-	
+
 	if (!isSfxPlaying()) {
 		var chance = running ? 0.02 : 0.01;
 		if (Math.random() < chance) {
@@ -382,9 +370,11 @@ function drawScreen() {
 	tileEngine(ctx, player.pos.x, player.pos.y);
 
 	for (var i = 0; i < objects.length; ++i) {
-		var image = new Image();
-		image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
-		ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+		if(Math.abs(objects[i].pos.x - player.pos.x) < canvas.width && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height){
+			var image = new Image();
+			image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
+			ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+		}
 	}
 
 	drawCharacter(player);
