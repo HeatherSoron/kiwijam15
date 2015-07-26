@@ -11,6 +11,8 @@ function loadMapInit(){
 function processMap(){
   var imagex = tileData.width;
   var imagey = tileData.height;
+  map = [];
+  var iceCreamObject = foo.level.objects['0,255,0'];
   for(rowIndex = 0; rowIndex < imagey; rowIndex++){
     var row = [];
     for(columnIndex = 0; columnIndex < imagex; columnIndex++){
@@ -21,6 +23,10 @@ function processMap(){
         var obj = foo.level.objects[symbol];
         addObject(obj, columnIndex, rowIndex, foo.level.tileSize);
         row[columnIndex] = obj.floorTile;
+      } else if (symbol in foo.level.tiles && foo.level.tiles[symbol].collidable == false) {
+        if (Math.random() < iceCreamSpawnChance) {
+          addObject(iceCreamObject, columnIndex, rowIndex, foo.level.tileSize);
+        }
       }
     }
     map.push(row);

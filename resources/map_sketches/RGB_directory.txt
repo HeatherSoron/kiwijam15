@@ -36,6 +36,26 @@ Floors:
 0, 255, 255: dirty floor (dirty_floor)
 128, 64, 64: (Wood_floor)
 255, 255, 255: empty space
+0, 0, 255: gym centre
+128, 64, 64: Wood floor
+128,64, 0: gym bench not front
+0, 255, 0: gym bench front
+0, 128, 255: kitchen tile
+0, 255, 255: dirty floor
+Kitchen bench 1
+Kitchen bench 2
+Kitchen bench 3
+Fridge
+0, 64, 128: Classroom floor
+255, 128, 255: nurse floor
+255, 127, 39: Stage floor
+128, 128, 64: Bookshelf right
+127, 128, 64: Bookshelf front
+126, 128, 64: Bookshelf left
+125, 128, 64: Bookshelf centre
+0, 64, 64: Toilet
+64, 0, 64: toilet sink
+0, 128, 64: toilet wall
 0, 128, 255:  (kitchen_floor)
 0, 64, 128: Carpet floor (capet_floorBlue)
 255, 128, 255: nurse floor (concrete_wall_floor)
