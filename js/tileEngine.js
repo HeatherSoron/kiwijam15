@@ -28,7 +28,7 @@ function processMap(){
   for(imgIndex in foo.level.tiles){
     var image = new Image();
     image.src = fullImagePath(foo.level.tiles[imgIndex].image);
-    foo.level.tiles[imgIndex] = image;
+    foo.level.tiles[imgIndex].image = image;
   }
 }
 
@@ -38,7 +38,7 @@ function tileEngine(ctx){
     for(columnIndex in row){
       var symbol = row[columnIndex];
       if(typeof foo.level.tiles[symbol] != 'undefined'){
-        ctx.drawImage(foo.level.tiles[symbol], foo.level.tileSize*columnIndex, foo.level.tileSize*rowIndex);
+        ctx.drawImage(foo.level.tiles[symbol].image, foo.level.tileSize*columnIndex, foo.level.tileSize*rowIndex);
       }
     }
   }
@@ -47,9 +47,7 @@ function tileEngine(ctx){
 function isCollidable(x, y){
   var tileX = Math.floor(x/foo.level.tileSize);
   var tileY = Math.floor(y/foo.level.tileSize);
-  console.log(map[tileX][tileY]);
-  console.log(tileX + "," + tileY);
-  var tileSymbol = map[tileX][tileY];
+  var tileSymbol = map[tileY][tileX];
   var tile = foo.level.tiles[tileSymbol];
   if (!tile) {
     return true;
