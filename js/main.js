@@ -267,6 +267,9 @@ function runGame() {
 		if (gradOuterRad <= 30) {
 			endingStartDelay -= frameDuration;
 			if (endingStartDelay < 0) {
+				if (!playEnding) {
+					sfx.death.play();
+				}
 				playEnding = true;
 			}
 		}
@@ -383,7 +386,6 @@ function moveScoopy() {
 
 function lose() {
 	lost = true;
-	sfx.death.play();
 	drawScreen();
 }
 
@@ -393,58 +395,6 @@ function resizeCanvas(e) {
 }
 
 function drawScreen() {
-	ctx.save()
-
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.translate(-player.pos.x + canvas.width/2, -player.pos.y + canvas.height/2);
-
-	//Draw map
-	tileEngine(ctx, player.pos.x, player.pos.y);
-
-	for (var i = 0; i < objects.length; ++i) {
-		if(Math.abs(objects[i].pos.x - player.pos.x) < canvas.width && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height){
-			var image = new Image();
-			image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
-			ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
-		}
-	}
-
-	drawCharacter(player);
-
-	ctx.fillStyle = 'beige';
-	for (var i = 0; i < cones.length; ++i) {
-		var pos = cones[i];
-		ctx.drawImage(splatImage, pos.x - (splatImage.width/2), pos.y - (splatImage.height/2));
-	}
-
-	drawCharacter(scoopy);
-
-	ctx.restore();
-	var gradRef1 = new Point(canvas.width/2, canvas.height/2);
-	var gradRef2 = new Point(canvas.width/2, canvas.height/2);
-	var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, gradOuterRad, gradRef2.x, gradRef2.y, gradInnerRad);
-	gradient.addColorStop(0,"rgba(0,0,0,1)");
-	gradient.addColorStop(1,"rgba(0,100,150,0.2)");
-	ctx.fillStyle = gradient;
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-	if (lost && !playEnding) {
-		ctx.textAlign="left";
-		ctx.fillStyle = endTextColor;
-		ctx.font = "bold 30pt Comic Sans MS";
-
-		var textWidth = ctx.measureText(lossText).width;
-		ctx.fillText(lossText, (canvas.width - textWidth) / 2, 70);
-
-		var scoreText = scoreTextTemplate.replace(/%d/, score);
-		textWidth = ctx.measureText(scoreText).width;
-		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
-	}
-	
-	if (playEnding && currentEndgameFrame < endgameFrameCount) {
-		ctx.drawImage(endgameFrames[currentEndgameFrame], (canvas.width - 500)/2, (canvas.height - 500)/2);
-	}
-
 	if(creditsPlaying){
 		ctx.fillStyle = 'rgb(0,0,0)';
 		ctx.rect(0, 0, canvas.width, canvas.height);
@@ -466,7 +416,59 @@ function drawScreen() {
 			ctx.fillText(credit, canvas.width / 2,index*canvas.width/25 +   creditY);
 
 		}
-		creditY--;
+		creditY -= 2;
+	} else {
+		ctx.save()
+
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.translate(-player.pos.x + canvas.width/2, -player.pos.y + canvas.height/2);
+
+		//Draw map
+		tileEngine(ctx, player.pos.x, player.pos.y);
+
+		for (var i = 0; i < objects.length; ++i) {
+			if(Math.abs(objects[i].pos.x - player.pos.x) < canvas.width && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height){
+				var image = new Image();
+				image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
+				ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+			}
+		}
+
+		drawCharacter(player);
+
+		ctx.fillStyle = 'beige';
+		for (var i = 0; i < cones.length; ++i) {
+			var pos = cones[i];
+			ctx.drawImage(splatImage, pos.x - (splatImage.width/2), pos.y - (splatImage.height/2));
+		}
+
+		drawCharacter(scoopy);
+
+		ctx.restore();
+		var gradRef1 = new Point(canvas.width/2, canvas.height/2);
+		var gradRef2 = new Point(canvas.width/2, canvas.height/2);
+		var gradient = ctx.createRadialGradient(gradRef1.x, gradRef1.y, gradOuterRad, gradRef2.x, gradRef2.y, gradInnerRad);
+		gradient.addColorStop(0,"rgba(0,0,0,1)");
+		gradient.addColorStop(1,"rgba(0,100,150,0.2)");
+		ctx.fillStyle = gradient;
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+		if (lost && !playEnding) {
+			ctx.textAlign="left";
+			ctx.fillStyle = endTextColor;
+			ctx.font = "bold 30pt Comic Sans MS";
+
+			var textWidth = ctx.measureText(lossText).width;
+			ctx.fillText(lossText, (canvas.width - textWidth) / 2, 70);
+
+			var scoreText = scoreTextTemplate.replace(/%d/, score);
+			textWidth = ctx.measureText(scoreText).width;
+			ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
+		}
+	
+		if (playEnding && currentEndgameFrame < endgameFrameCount) {
+			ctx.drawImage(endgameFrames[currentEndgameFrame], (canvas.width - 500)/2, (canvas.height - 500)/2);
+		}
 	}
 }
 
