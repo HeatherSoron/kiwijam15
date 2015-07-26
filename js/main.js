@@ -73,7 +73,7 @@ var musicVolume = 0.15;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
-	
+
 	for (var i = 0; i < endgameFrameCount; ++i) {
 		var image = new Image();
 		image.src = fullImagePath(endgameFramePattern.replace(/%d/, i));
@@ -152,7 +152,7 @@ function startGame() {
 	// currentLevel = processLevel(foo.level);
 
 	loadMapInit();
-	
+
 	currentEndgameFrame = 0;
 	currentEndgameFrameDelay = endgameFrameDelay;
 
@@ -234,7 +234,7 @@ function startGame() {
 
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
-	
+
 	endingStartDelay = 1000;
 	creditsPlaying = false;
 	playEnding = false;
@@ -249,6 +249,8 @@ function startGame() {
 }
 
 function runGame() {
+	scoopy.walkSpeed += 0.005;
+	scoopy.runSpeed += 0.005;
 	if (!lost) {
 		if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
 			player.vel.x = 0;
@@ -399,7 +401,7 @@ function drawScreen() {
 		ctx.fillStyle = 'rgb(0,0,0)';
 		ctx.rect(0, 0, canvas.width, canvas.height);
 		ctx.fill();
-		
+
 		ctx.textAlign="center";
 		ctx.fillStyle = endTextColor;
 
@@ -465,7 +467,7 @@ function drawScreen() {
 			textWidth = ctx.measureText(scoreText).width;
 			ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
 		}
-	
+
 		if (playEnding && currentEndgameFrame < endgameFrameCount) {
 			ctx.drawImage(endgameFrames[currentEndgameFrame], (canvas.width - 500)/2, (canvas.height - 500)/2);
 		}
