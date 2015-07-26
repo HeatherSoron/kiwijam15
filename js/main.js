@@ -180,7 +180,8 @@ function runGame() {
 	if (!lost) {
 		if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
 			player.vel.x = 0;
-		}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
+		}
+		if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
 			player.vel.y = 0;
 		}
 		player.pos.offsetBy(player.vel.times(player.speed));
@@ -274,7 +275,8 @@ function moveScoopy() {
 			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
 			y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
 		}
-	}else if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
+	}
+	if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
 		y = 0;
 		if(x <10){
 			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
