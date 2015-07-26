@@ -8,7 +8,7 @@ var foo =
       //floor tiles
       "0,255,255": {"image": "finaltexturelist/dirty_floor.png", "collidable": false},
       "128,64,64": {"image": "finaltexturelist/wooden_floor.png", "collidable": false},
-      "0,128,255": {"image": "finaltexturelist/Kitchen_floor.png", "collidable": false},
+      "0,128,255": {"image": "finaltexturelist/kitchen_floor.png", "collidable": false},
       "0,64,128": {"image": "finaltexturelist/carpet_floorBlue.png", "collidable": false},
       "255,128,255": {"image": "finaltexturelist/concrete_wall_floor.png", "collidable": false},
       "255,127,39": {"image": "finaltexturelist/wood_floor_light.png", "collidable": false},
@@ -19,7 +19,7 @@ var foo =
       //floor blocked tiles
       "0,255,254": {"image": "finaltexturelist/dirty_floor.png", "collidable": true},
       "128,64,63": {"image": "finaltexturelist/wooden_floor.png", "collidable": true},
-      "0,128,254": {"image": "finaltexturelist/Kitchen_floor.png", "collidable": true},
+      "0,128,254": {"image": "finaltexturelist/kitchen_floor.png", "collidable": true},
       "0,64,127": {"image": "finaltexturelist/carpet_floorBlue.png", "collidable": true},
       "255,128,254": {"image": "finaltexturelist/concrete_wall_floor.png", "collidable": true},
       "255,127,38": {"image": "finaltexturelist/wood_floor_light.png", "collidable": true},
