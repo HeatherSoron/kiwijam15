@@ -176,7 +176,7 @@ function startGame() {
 
 	scoopy = {
 		walkSpeed: 4,
-		runSpeed: 5.1,
+		runSpeed: 5.2,
 		wanderAngle: 0,
 		pos: new Point(3600, 1260),
 		rad: 100,
@@ -231,7 +231,7 @@ function runGame() {
 		if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
 			player.vel.y = 0;
 		}
-		player.pos.offsetBy(player.vel.times(player.speed));
+		player.pos.offsetBy(player.vel.normalize().times(player.speed));
 		interactWithObjects();
 		animateAlice();
 
