@@ -11,6 +11,7 @@ function loadMapInit(){
 function processMap(){
   var imagex = tileData.width;
   var imagey = tileData.height;
+  map = [];
   for(rowIndex = 0; rowIndex < imagey; rowIndex++){
     var row = [];
     for(columnIndex = 0; columnIndex < imagex; columnIndex++){
