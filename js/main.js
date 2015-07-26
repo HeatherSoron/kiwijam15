@@ -142,7 +142,7 @@ function startGame() {
 		speed: 5,
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
-		pos: new Point(4800, 840),
+		pos: new Point(700, 840),
 		rad: 50,
 		scoopCount: 3,
 		frameCount: {
@@ -368,9 +368,11 @@ function drawScreen() {
 	tileEngine(ctx, player.pos.x, player.pos.y);
 
 	for (var i = 0; i < objects.length; ++i) {
-		var image = new Image();
-		image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
-		ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+		if(Math.abs(objects[i].pos.x - player.pos.x) < canvas.width && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height){
+			var image = new Image();
+			image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
+			ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+		}
 	}
 
 	drawCharacter(player);
