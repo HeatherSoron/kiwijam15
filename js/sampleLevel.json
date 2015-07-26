@@ -4,23 +4,10 @@ var foo =
     "levelName": "ice cream level",
     "tileSize": "60", //square
     "mapFile": "resources/map_sketches/map_full.png", // placeholder for testing purposes
-    /*"map": [
-      "XXXXXXXXXXXXXXXXXXXXXXX",
-      "XXOOOOOOOOOOOOOOOXXXXXX",
-      "XXOOCOOOOCOOOOOOOXXXXXX",
-      "XXOOOOOOOOOOOCOOOOOOOXX",
-      "XXOOOOXXXOOOOOOOOXXOOXX",
-      "XXXOCOXXOOCOOXXOOXXOOXX",
-      "XXXOOXOOOOOOOOXXXXXOOXX",
-      "XXXOOXOOOCOOOOOCOOOOOXX",
-      "XXXOOXOOOOOOOXXXOOXXXXX",
-      "XXXOOXOOOOXXXOOOOOXXXXX",
-      "XXXOOXXXXOOOOOCOOXXXXXX",
-      "XXOOOOOOCOOOOOOOOXXXXXX",
-      "XXXXXXXXXXXXXXXXXXXXXXX"],*/
     "tiles": {
       "0,0,0": {"image": "textures/white_wall.png", "collidable": true},
       "128,64,64": {"image": "wooden_floor.png", "collidable": false},
+      "128,64,0": {"image": "textures/bench.png", "collidable": true},
       "255,255,255": {"image": "textures/empty_space.png", "collidable": true},
       "0,128,255": {"image": "textures/kitchen_floor.png", "collidable": false},
       "0,255,255": {"image": "textures/dirty_floor.png", "collidable": false}},
@@ -41,6 +28,12 @@ var foo =
           "icecream/Vanilla.png",
         ],
         "floorTile": "136,0,21",
-        "ontouch": "gainIceCream"}}
+        "ontouch": "gainIceCream"},
+      "0,64,64": {
+        "images": [
+          "textures/toilet_1.png",
+        ],
+        "floorTile": "128,64,64"},
+      }
     }
   }
