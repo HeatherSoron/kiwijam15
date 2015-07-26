@@ -17,30 +17,20 @@ var foo =
       "64,0,0": {"image": "textures/carpet_blue_light.png", "collidable": false},
 
       //floor blocked tiles
-      "0,255,254": {"image": "textures/dirty_floor.png", "collidable": false},
-      "128,64,63": {"image": "textures/Wood_floor.png", "collidable": false},
-      "0,128,254": {"image": "textures/Kitchen_floor.png", "collidable": false},
-      "0,64,127": {"image": "textures/carpet_floorBlue.png", "collidable": false},
-      "255,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": false},
-      "255,127,38": {"image": "textures/wood_floor_light.png", "collidable": false},
-      "128,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": false},
-      "167,181,69": {"image": "textures/dirty_floor.png", "collidable": false},
-      "64,0,1": {"image": "textures/carpet_blue_light.png", "collidable": false},
+      "0,255,254": {"image": "textures/dirty_floor.png", "collidable": true},
+      "128,64,63": {"image": "textures/Wood_floor.png", "collidable": true},
+      "0,128,254": {"image": "textures/Kitchen_floor.png", "collidable": true},
+      "0,64,127": {"image": "textures/carpet_floorBlue.png", "collidable": true},
+      "255,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": true},
+      "255,127,38": {"image": "textures/wood_floor_light.png", "collidable": true},
+      "128,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": true},
+      "167,181,69": {"image": "textures/dirty_floor.png", "collidable": true},
+      "64,0,1": {"image": "textures/carpet_blue_light.png", "collidable": true},
 
       //blocked tiles
       "255,255,255": {"image": "textures/emptyspace.png", "collidable": true},
       "0,0,0": {"image": "textures/Wood_floor_dark.png", "collidable": true}},
     "objects": {
-      "200,200,200": {
-        "images": [
-          "textures/Countertop1.png",
-        ],
-        "floorTile": "0,128,254"},
-      "199,199,199": {
-        "images": [
-          "textures/Countertop2.png",
-        ],
-        "floorTile": "0,128,254"},
       "0,255,0": {
         "images": [
           "Glow_Ice/IceCream_Glow0000.png",
@@ -70,11 +60,101 @@ var foo =
         ],
         "floorTile": "136,0,21",
         "ontouch": "gainIceCream"},
+      "200,200,200": {
+        "images": [
+          "textures/Countertop1",
+        ],
+        "floorTile": "0,128,255"},
+      "199,199,199": {
+        "images": [
+          "textures/Countertop2",
+        ],
+        "floorTile": "0,128,255"},
+      "198,198,198": {
+        "images": [
+          "textures/Countertop2",
+        ],
+        "floorTile": "0,128,255"},
+      "201,0,100": {
+        "images": [
+          "textures/Fridge",
+        ],
+        "floorTile": "0,128,255"},
+      "150,10,0": {
+        "images": [
+          "textures/Sink",
+        ],
+        "floorTile": "0,128,255"},
+      "128,128,64": {
+        "images": [
+          "textures/bookshelf_right",
+        ],
+        "floorTile": "64,0,0"},
+      "127,128,64": {
+        "images": [
+          "textures/bookshelf_front",
+        ],
+        "floorTile": "64,0,0"},
+      "126,128,64": {
+        "images": [
+          "textures/bookshelf_left",
+        ],
+        "floorTile": "64,0,0"},
+      "125,128,64": {
+        "images": [
+          "textures/bookshelf_centre",
+        ],
+        "floorTile": "64,0,0"},
       "0,64,64": {
         "images": [
-          "textures/toilet_1.png",
+          "textures/toilet_2",
         ],
-        "floorTile": "128,64,64"},
+        "floorTile": "167,181,70"},
+      "64,0,64": {
+        "images": [
+          "textures/toilet_sink",
+        ],
+        "floorTile": "167,181,70"},
+      "0,0,64": {
+        "images": [
+          "textures/Cafeteria",
+        ],
+        "floorTile": "167,181,70"},
+      "64,0,128": {
+        "images": [
+          "textures/KitchenIsland",
+        ],
+        "floorTile": "167,181,70"},
+      "255,128,192": {
+        "images": [
+          "textures/desk_3",
+        ],
+        "floorTile": "0,64,128"},
+      "50,0,50": {
+        "images": [
+          "textures/sick_bay_bed",
+        ],
+        "floorTile": "128,128,255"},
+      "10,0,10": {
+        "images": [
+          "textures/medical_cabinet",
+        ],
+        "floorTile": "128,128,255"},
+      "79,172,163": {
+        "images": [
+          "textures/Easel",
+        ],
+        "floorTile": "128,128,255"},
+      "174,140,77": {
+        "images": [
+          "textures/ArtTable1",
+        ],
+        "floorTile": "128,128,255"},
+      "83,108,168": {
+        "images": [
+          "textures/ArtSink",
+        ],
+        "floorTile": "128,128,255"}
       }
     }
   }
