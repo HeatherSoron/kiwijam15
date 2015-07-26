@@ -18,7 +18,7 @@ var playEnding;
 
 // lime green
 var endTextColor = 'rgb(0,255,0)';
-var lossText = "a sacrifice for mr. scoopy's eyes-cream";
+var lossText = "a sacrifice for mr. scoopy's eye-scream";
 var scoreTextTemplate = "your value: %d";
 
 var score;
