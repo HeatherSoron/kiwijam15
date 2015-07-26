@@ -31,12 +31,14 @@ var sfx = {
 	"throwCone": "Ice_cream_drop.wav",
 	"pickup": "Ice_cream_pick_up.wav",
 	"distract": "Scoopy_eats_ice_cream.wav",
-	"ambient": [
+	"alert": [
 		"scoopy_eyes_cream.wav",
+		"scoopy_sacrifice.wav",
+	],
+	"ambient": [
 		"scoopy_grumble_1.wav",
 		"scoopy_grumble_2.wav",
 		"scoopy_grumble_3.wav",
-		"scoopy_sacrifice.wav",
 		"scoopy_sundae_drive.wav",
 		"scoopy_searching_come_out.wav",
 		"scoopy_searching_where_are_you.wav",
@@ -86,7 +88,7 @@ function init() {
 
 function isSfxPlaying() {
 	for (var key in sfx) {
-		if (typeof sfx[key] == 'object') {
+		if (sfx[key] instanceof Array) {
 			for (var index in sfx[key]) {
 				if (!sfx[key][index].paused) {
 					return true;
@@ -99,6 +101,11 @@ function isSfxPlaying() {
 		}
 	}
 	return false;
+}
+
+function playRandomAudio(arr) {	
+	var randIndex = Math.floor(Math.random() * arr.length);
+	arr[randIndex].play();
 }
 
 function fullImagePath(path) {
@@ -291,6 +298,7 @@ function moveScoopy() {
 		if (!ambientMusic.paused) {
 			ambientMusic.pause();
 			chaseMusic.play();
+			playRandomAudio(sfx.alert);
 		}
 		x = dir.x * scoopy.runSpeed;
 		y = dir.y * scoopy.runSpeed;
@@ -333,6 +341,13 @@ function moveScoopy() {
 	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
+	
+	if (!isSfxPlaying()) {
+		var chance = running ? 0.02 : 0.01;
+		if (Math.random() < chance) {
+			playRandomAudio(sfx.ambient);
+		}
+	}
 
 	animateScoopy(x, y, running);
 }
