@@ -57,16 +57,6 @@ function tileEngine(ctx,x,y){
       }
     }
   }
-
-  // for(rowIndex in map){
-  //   var row = map[rowIndex];
-  //   for(columnIndex in row){
-  //     var symbol = row[columnIndex];
-  //     if(typeof foo.level.tiles[symbol] != 'undefined'){
-  //       ctx.drawImage(foo.level.tiles[symbol].image, foo.level.tileSize*columnIndex, foo.level.tileSize*rowIndex);
-  //     }
-  //   }
-  // }
 }
 
 function ceilToZero(number){

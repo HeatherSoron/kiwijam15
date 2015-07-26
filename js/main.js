@@ -61,7 +61,7 @@ var musicVolume = 0.15;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
-	
+
 	splatImage = new Image();
 	splatImage.src = fullImagePath("SplatDetailed.png");
 
