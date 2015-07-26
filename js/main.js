@@ -87,7 +87,6 @@ function init() {
 		}
 	}
 
-	creditY = canvas.height + 50;
 	startGame();
 	gameLoop = setInterval(runGame, frameDuration);
 }
@@ -232,6 +231,8 @@ function startGame() {
 	gradInnerRad = 25;
 	
 	creditStartDelay = 1000;
+	creditsPlaying = false;
+	creditY = canvas.height + 50;
 
 	ambientMusic.volume = musicVolume;
 	ambientMusic.play();
