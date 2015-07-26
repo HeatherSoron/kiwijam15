@@ -1,16 +1,21 @@
 var tileData;
-var map = [[]];
+var map = undefined;
 var imgArray = [];
 
 function loadMapInit(){
-  var imageURL = foo.level.mapFile;
-  loadMapImage(imageURL);
+  if (tileData) {
+    processMap();
+  } else {
+    var imageURL = foo.level.mapFile;
+    loadMapImage(imageURL);
+  }
 }
 
 
 function processMap(){
   var imagex = tileData.width;
   var imagey = tileData.height;
+  var alreadyInitialized = (map !== undefined);
   map = [];
   var iceCreamObject = foo.level.objects['0,255,0'];
   for(rowIndex = 0; rowIndex < imagey; rowIndex++){
@@ -31,10 +36,12 @@ function processMap(){
     }
     map.push(row);
   }
-  for(imgIndex in foo.level.tiles){
-    var image = new Image();
-    image.src = fullImagePath(foo.level.tiles[imgIndex].image);
-    foo.level.tiles[imgIndex].image = image;
+  if (!alreadyInitialized) {
+    for(imgIndex in foo.level.tiles){
+      var image = new Image();
+      image.src = fullImagePath(foo.level.tiles[imgIndex].image);
+      foo.level.tiles[imgIndex].image = image;
+    }
   }
 }
 
