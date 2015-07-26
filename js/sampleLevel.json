@@ -79,7 +79,7 @@ var foo =
         "images": [
           "finaltexturelist/Fridge.png",
         ],
-        "floorTile": "0,128,255"},
+        "floorTile": "167,181,70"},
       "150,10,0": {
         "images": [
           "finaltexturelist/Sink.png",
