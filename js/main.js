@@ -28,6 +28,8 @@ var chaseMusic;
 var ambientMusic;
 
 var lost = false;
+var creditsPlaying = true;
+var creditY = 0;
 
 var frameDuration = 20;
 
@@ -41,13 +43,14 @@ function init() {
 
 	resizeCanvas();
 	registerListeners();
-	
+
 	ambientMusic = new Audio('resources/music/GameJamGREEN_1.mp3');
 	ambientMusic.loop = true;
-	
+
 	chaseMusic = new Audio('resources/music/GameJamCHASE_Celli&Glock.mp3');
 	chaseMusic.loop = true;
-	
+
+	creditY = canvas.height + 50;
 	startGame();
 	gameLoop = setInterval(runGame, frameDuration);
 }
@@ -168,7 +171,7 @@ function startGame() {
 
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
-	
+
 	ambientMusic.volume = quietVolume;
 	ambientMusic.play();
 }
@@ -235,7 +238,7 @@ function moveScoopy() {
 	var chaseDistance = player.rad * (sightDist - 3);
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
-		
+
 		if (!ambientMusic.paused) {
 			ambientMusic.pause();
 			chaseMusic.play();
@@ -292,7 +295,7 @@ function drawScreen() {
 	ctx.translate(-player.pos.x + canvas.width/2, -player.pos.y + canvas.height/2);
 
 	//Draw map
-	tileEngine(ctx);
+	tileEngine(ctx, player.pos.x, player.pos.y);
 
 	for (var i = 0; i < objects.length; ++i) {
 		var image = new Image();
@@ -322,6 +325,7 @@ function drawScreen() {
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	if (lost) {
+		ctx.textAlign="left";
 		ctx.fillStyle = endTextColor;
 		ctx.font = "bold 30pt Comic Sans MS";
 
@@ -332,6 +336,30 @@ function drawScreen() {
 		textWidth = ctx.measureText(scoreText).width;
 		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
 	}
+
+	if(creditsPlaying){
+		ctx.textAlign="center";
+		ctx.fillStyle = endTextColor;
+
+		// var credit = "";
+		for(index in credits.creditText){
+			var credit = credits.creditText[index];
+			textWidth = ctx.measureText(scoreText).width;
+			if(credit.charAt(0) !='#'){
+				ctx.font = "bold 30pt Lucida Sans MS";
+			} else{
+				ctx.font = "bold 20pt Lucida Sans MS";
+				credit = credit.substring(1);
+			}
+			ctx.fillText(credit, canvas.width / 2,index*canvas.width/25 +   creditY);
+
+		}
+		creditY--;
+	}
+}
+
+function credits(ctx){
+
 }
 
 function drawCharacter(char) {
