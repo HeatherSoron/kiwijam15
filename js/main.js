@@ -28,7 +28,7 @@ var chaseMusic;
 var ambientMusic;
 
 var lost = false;
-var creditsPlaying = true;
+var creditsPlaying = false;
 var creditY = 0;
 
 var frameDuration = 20;
