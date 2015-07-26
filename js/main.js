@@ -75,7 +75,7 @@ function startGame() {
 		speed: 3,
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
-		pos: new Point(121, 121),
+		pos: new Point(1000, 1200),
 		rad: 50,
 		scoopCount: 3,
 		frameCount: {
@@ -111,7 +111,7 @@ function startGame() {
 		walkSpeed: 2.5,
 		runSpeed: 3.1,
 		wanderAngle: 0,
-		pos: new Point(500, 200),
+		pos: new Point(1400, 1700),
 		rad: 100,
 		// delays in ms
 		currentDelay: 0,
