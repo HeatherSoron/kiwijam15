@@ -29,6 +29,7 @@ var ambientMusic;
 var sfx = {
 	"death": "Eyeball_scooping.wav",
 	"throwCone": "Ice_cream_drop.wav",
+	"pickup": "Ice_cream_pick_up.wav",
 	"distract": "Scoopy_eats_ice_cream.wav",
 	"ambient": [
 		"scoopy_eyes_cream.wav",
@@ -81,6 +82,23 @@ function init() {
 	creditY = canvas.height + 50;
 	startGame();
 	gameLoop = setInterval(runGame, frameDuration);
+}
+
+function isSfxPlaying() {
+	for (var key in sfx) {
+		if (typeof sfx[key] == 'object') {
+			for (var index in sfx[key]) {
+				if (!sfx[key][index].paused) {
+					return true;
+				}
+			}
+		} else {
+			if (!sfx[key].paused) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 function fullImagePath(path) {

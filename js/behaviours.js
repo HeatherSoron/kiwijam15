@@ -20,6 +20,7 @@ function interactWithObjects() {
 
 var objectOntouch = {
 	gainIceCream: function() {
+		sfx.pickup.play();
 		player.scoopCount += 1;
 		console.log(player.scoopCount);
 		return true;
