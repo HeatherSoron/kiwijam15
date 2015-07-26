@@ -1,4 +1,6 @@
 var keys = {
+	'enter': 13,
+	
 	'space': 32,
 	
 	'left': 37,
@@ -42,7 +44,7 @@ function handleKeyDown(e) {
 			break;
 	}
 	
-	if (lost) {
+	if (lost && e.keyCode == keys.enter) {
 		lost = false;
 		startGame();
 	}
