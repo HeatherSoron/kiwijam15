@@ -267,6 +267,9 @@ function runGame() {
 		if (gradOuterRad <= 30) {
 			endingStartDelay -= frameDuration;
 			if (endingStartDelay < 0) {
+				if (!playEnding) {
+					sfx.death.play();
+				}
 				playEnding = true;
 			}
 		}
@@ -383,7 +386,6 @@ function moveScoopy() {
 
 function lose() {
 	lost = true;
-	sfx.death.play();
 	drawScreen();
 }
 
