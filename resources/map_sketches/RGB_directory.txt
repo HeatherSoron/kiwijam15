@@ -22,10 +22,14 @@ RGB values:
 0, 64, 64: Toilet
 64, 0, 64: toilet sink
 0, 128, 64: toilet wall
-128, 128, 255: rec room floor
+128, 128, 255: rec room floor (concrete_wall_floor)
 64, 0, 0: library floor
 0, 0, 64: Cafeteria table 
 64, 0, 128: kitchen island cafeteria floor
 255, 128, 192: desk
 50, 0, 50: Medical bed
 10, 0, 10: Medical cabinet
+167, 181, 70: dirty floor
+79, 172, 163: easel
+174, 140, 77: art table
+83, 108, 168: art sink
