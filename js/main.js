@@ -14,6 +14,8 @@ var score;
 var scoopyScorePenalty = 30;
 var scorePerScoopFrame = 1;
 
+var iceCreamSpawnChance = 1.0 / 30;
+
 var cones;
 
 var player;
@@ -71,6 +73,7 @@ function startGame() {
 	// currentLevel = processLevel(foo.level);
 
 	loadMapInit();
+	
 	player = {
 		speed: 3,
 		// velocity is not really a point, but it's an xy tuple
