@@ -73,8 +73,11 @@ function init() {
 
 	chaseMusic = new Audio('resources/music/GameJamCHASE_Celli&Glock.mp3');
 	chaseMusic.loop = true;
+// <<<<<<< HEAD
+//
+// =======
 	chaseMusic.volume = musicVolume;
-	
+
 	for (var key in sfx) {
 		if (typeof sfx[key] == 'object') {
 			for (var index in sfx[key]) {
@@ -88,6 +91,7 @@ function init() {
 	}
 
 	creditY = canvas.height + 50;
+// >>>>>>> e9e6dae0486b5bf1440547c508e12082efdc2f2e
 	startGame();
 	gameLoop = setInterval(runGame, frameDuration);
 }
@@ -109,7 +113,7 @@ function isSfxPlaying() {
 	return false;
 }
 
-function playRandomAudio(arr) {	
+function playRandomAudio(arr) {
 	var randIndex = Math.floor(Math.random() * arr.length);
 	arr[randIndex].play();
 }
@@ -133,9 +137,9 @@ function startGame() {
 	// currentLevel = processLevel(foo.level);
 
 	loadMapInit();
-	
+
 	player = {
-		speed: 3,
+		speed: 5,
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
 		pos: new Point(1000, 1200),
@@ -171,8 +175,8 @@ function startGame() {
 	}
 
 	scoopy = {
-		walkSpeed: 2.5,
-		runSpeed: 3.1,
+		walkSpeed: 4,
+		runSpeed: 5.1,
 		wanderAngle: 0,
 		pos: new Point(1400, 1700),
 		rad: 100,
@@ -211,7 +215,11 @@ function startGame() {
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
 
-	ambientMusic.volume = musicVolume;
+// <<<<<<< HEAD
+	ambientMusic.volume = quietVolume;
+// =======
+// 	ambientMusic.volume = musicVolume;
+// >>>>>>> e9e6dae0486b5bf1440547c508e12082efdc2f2e
 	ambientMusic.play();
 }
 
@@ -223,7 +231,6 @@ function runGame() {
 		if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
 			player.vel.y = 0;
 		}
-		// console.log(player.pos.x + "," + player.pos.y)
 		player.pos.offsetBy(player.vel.times(player.speed));
 		interactWithObjects();
 		animateAlice();
@@ -329,7 +336,7 @@ function moveScoopy() {
 	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
-	
+
 	if (!isSfxPlaying()) {
 		var chance = running ? 0.02 : 0.01;
 		if (Math.random() < chance) {

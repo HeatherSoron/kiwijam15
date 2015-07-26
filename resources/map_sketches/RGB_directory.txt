@@ -36,7 +36,6 @@ Floors:
 0, 255, 255: dirty floor (dirty_floor)
 128, 64, 64: (Wood_floor)
 255, 255, 255: empty space
-<<<<<<< HEAD
 0, 0, 255: gym centre
 128, 64, 64: Wood floor
 128,64, 0: gym bench not front
@@ -57,7 +56,6 @@ Fridge
 0, 64, 64: Toilet
 64, 0, 64: toilet sink
 0, 128, 64: toilet wall
-=======
 0, 128, 255:  (kitchen_floor)
 0, 64, 128: Carpet floor (capet_floorBlue)
 255, 128, 255: nurse floor (concrete_wall_floor)
@@ -68,4 +66,3 @@ Fridge
 
 Walls:
 0, 0, 0: (Wooden_floor_dark)
->>>>>>> master
