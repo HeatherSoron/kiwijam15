@@ -14,9 +14,10 @@ var score;
 var scoopyScorePenalty = 30;
 var scorePerScoopFrame = 1;
 
-var iceCreamSpawnChance = 1.0 / 30;
+var iceCreamSpawnChance = 1.0 / 50;
 
 var cones;
+var splatImage;
 
 var player;
 var scoopy;
@@ -60,6 +61,9 @@ var musicVolume = 0.15;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
+	
+	splatImage = new Image();
+	splatImage.src = fullImagePath("SplatDetailed.png");
 
 	resizeCanvas();
 	registerListeners();
@@ -373,10 +377,8 @@ function drawScreen() {
 
 	ctx.fillStyle = 'beige';
 	for (var i = 0; i < cones.length; ++i) {
-		ctx.beginPath();
 		var pos = cones[i];
-		ctx.arc(pos.x, pos.y, 20, 0, 2 * Math.PI, false);
-		ctx.fill();
+		ctx.drawImage(splatImage, pos.x - (splatImage.width/2), pos.y - (splatImage.height/2));
 	}
 
 	drawCharacter(scoopy);
