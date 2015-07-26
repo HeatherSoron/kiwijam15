@@ -32,15 +32,42 @@ function processMap(){
   }
 }
 
-function tileEngine(ctx){
-  for(rowIndex in map){
+function tileEngine(ctx,x,y){
+  var xDrawDistance = Math.floor((canvas.width/2)/foo.level.tileSize) + 4;
+  var yDrawDistance = Math.floor((canvas.height/2)/foo.level.tileSize) +4;
+
+  var rowStart = ceilToZero(x/foo.level.tileSize-xDrawDistance);
+  var rowEnd = ceilToZero(x/foo.level.tileSize+xDrawDistance);
+  var colStart = ceilToZero(y/foo.level.tileSize-yDrawDistance);
+  var colEnd = ceilToZero(y/foo.level.tileSize+yDrawDistance);
+
+  for(rowIndex = colStart; rowIndex < colEnd; rowIndex++){
     var row = map[rowIndex];
-    for(columnIndex in row){
-      var symbol = row[columnIndex];
+      // console.log(rowIndex + "," );
+    for(colIndex = rowStart; colIndex < rowEnd; colIndex++){
+      var symbol = row[colIndex];
       if(typeof foo.level.tiles[symbol] != 'undefined'){
-        ctx.drawImage(foo.level.tiles[symbol].image, foo.level.tileSize*columnIndex, foo.level.tileSize*rowIndex);
+        ctx.drawImage(foo.level.tiles[symbol].image, foo.level.tileSize*colIndex, foo.level.tileSize*rowIndex);
       }
     }
+  }
+
+  // for(rowIndex in map){
+  //   var row = map[rowIndex];
+  //   for(columnIndex in row){
+  //     var symbol = row[columnIndex];
+  //     if(typeof foo.level.tiles[symbol] != 'undefined'){
+  //       ctx.drawImage(foo.level.tiles[symbol].image, foo.level.tileSize*columnIndex, foo.level.tileSize*rowIndex);
+  //     }
+  //   }
+  // }
+}
+
+function ceilToZero(number){
+  if(number < 0){
+    return 0;
+  } else{
+    return Math.floor(number);
   }
 }
 
