@@ -6,30 +6,30 @@ var foo =
     "mapFile": "resources/map_sketches/map_full.png", // placeholder for testing purposes
     "tiles": {
       //floor tiles
-      "0,255,255": {"image": "textures/dirty_floor.png", "collidable": false},
-      "128,64,64": {"image": "textures/Wood_floor.png", "collidable": false},
-      "0,128,255": {"image": "textures/Kitchen_floor.png", "collidable": false},
-      "0,64,128": {"image": "textures/carpet_floorBlue.png", "collidable": false},
-      "255,128,255": {"image": "textures/concrete_wall_floor.png", "collidable": false},
-      "255,127,39": {"image": "textures/wood_floor_light.png", "collidable": false},
-      "128,128,255": {"image": "textures/concrete_wall_floor.png", "collidable": false},
-      "167,181,70": {"image": "textures/dirty_floor.png", "collidable": false},
-      "64,0,0": {"image": "textures/carpet_blue_light.png", "collidable": false},
+      "0,255,255": {"image": "finaltexturelist/dirty_floor.png", "collidable": false},
+      "128,64,64": {"image": "finaltexturelist/Wood_floor.png", "collidable": false},
+      "0,128,255": {"image": "finaltexturelist/Kitchen_floor.png", "collidable": false},
+      "0,64,128": {"image": "finaltexturelist/carpet_floorBlue.png", "collidable": false},
+      "255,128,255": {"image": "finaltexturelist/concrete_wall_floor.png", "collidable": false},
+      "255,127,39": {"image": "finaltexturelist/wood_floor_light.png", "collidable": false},
+      "128,128,255": {"image": "finaltexturelist/concrete_wall_floor.png", "collidable": false},
+      "167,181,70": {"image": "finaltexturelist/dirty_floor.png", "collidable": false},
+      "64,0,0": {"image": "finaltexturelist/carpet_blue_light.png", "collidable": false},
 
       //floor blocked tiles
-      "0,255,254": {"image": "textures/dirty_floor.png", "collidable": true},
-      "128,64,63": {"image": "textures/Wood_floor.png", "collidable": true},
-      "0,128,254": {"image": "textures/Kitchen_floor.png", "collidable": true},
-      "0,64,127": {"image": "textures/carpet_floorBlue.png", "collidable": true},
-      "255,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": true},
-      "255,127,38": {"image": "textures/wood_floor_light.png", "collidable": true},
-      "128,128,254": {"image": "textures/concrete_wall_floor.png", "collidable": true},
-      "167,181,69": {"image": "textures/dirty_floor.png", "collidable": true},
-      "64,0,1": {"image": "textures/carpet_blue_light.png", "collidable": true},
+      "0,255,254": {"image": "finaltexturelist/dirty_floor.png", "collidable": true},
+      "128,64,63": {"image": "finaltexturelist/Wood_floor.png", "collidable": true},
+      "0,128,254": {"image": "finaltexturelist/Kitchen_floor.png", "collidable": true},
+      "0,64,127": {"image": "finaltexturelist/carpet_floorBlue.png", "collidable": true},
+      "255,128,254": {"image": "finaltexturelist/concrete_wall_floor.png", "collidable": true},
+      "255,127,38": {"image": "finaltexturelist/wood_floor_light.png", "collidable": true},
+      "128,128,254": {"image": "finaltexturelist/concrete_wall_floor.png", "collidable": true},
+      "167,181,69": {"image": "finaltexturelist/dirty_floor.png", "collidable": true},
+      "64,0,1": {"image": "finaltexturelist/carpet_blue_light.png", "collidable": true},
 
       //blocked tiles
-      "255,255,255": {"image": "textures/emptyspace.png", "collidable": true},
-      "0,0,0": {"image": "textures/Wood_floor_dark.png", "collidable": true}},
+      "255,255,255": {"image": "finaltexturelist/emptyspace.png", "collidable": true},
+      "0,0,0": {"image": "finaltexturelist/Wood_floor_dark.png", "collidable": true}},
     "objects": {
       "0,255,0": {
         "images": [
@@ -62,97 +62,97 @@ var foo =
         "ontouch": "gainIceCream"},
       "200,200,200": {
         "images": [
-          "textures/Countertop1",
+          "finaltexturelist/Countertop1.png",
         ],
         "floorTile": "0,128,255"},
       "199,199,199": {
         "images": [
-          "textures/Countertop2",
+          "finaltexturelist/Countertop2.png",
         ],
         "floorTile": "0,128,255"},
       "198,198,198": {
         "images": [
-          "textures/Countertop2",
+          "finaltexturelist/Countertop2.png",
         ],
         "floorTile": "0,128,255"},
       "201,0,100": {
         "images": [
-          "textures/Fridge",
+          "finaltexturelist/Fridge.png",
         ],
         "floorTile": "0,128,255"},
       "150,10,0": {
         "images": [
-          "textures/Sink",
+          "finaltexturelist/Sink.png",
         ],
         "floorTile": "0,128,255"},
       "128,128,64": {
         "images": [
-          "textures/bookshelf_right",
+          "finaltexturelist/bookshelf_right.png",
         ],
         "floorTile": "64,0,0"},
       "127,128,64": {
         "images": [
-          "textures/bookshelf_front",
+          "finaltexturelist/bookshelf_front.png",
         ],
         "floorTile": "64,0,0"},
       "126,128,64": {
         "images": [
-          "textures/bookshelf_left",
+          "finaltexturelist/bookshelf_left.png",
         ],
         "floorTile": "64,0,0"},
       "125,128,64": {
         "images": [
-          "textures/bookshelf_centre",
+          "finaltexturelist/bookshelf_centre.png",
         ],
         "floorTile": "64,0,0"},
       "0,64,64": {
         "images": [
-          "textures/toilet_2",
+          "finaltexturelist/toilet_2.png",
         ],
         "floorTile": "167,181,70"},
       "64,0,64": {
         "images": [
-          "textures/toilet_sink",
+          "finaltexturelist/toilet_sink.png",
         ],
         "floorTile": "167,181,70"},
       "0,0,64": {
         "images": [
-          "textures/Cafeteria",
+          "finaltexturelist/Cafeteria.png",
         ],
         "floorTile": "167,181,70"},
       "64,0,128": {
         "images": [
-          "textures/KitchenIsland",
+          "finaltexturelist/KitchenIsland.png",
         ],
         "floorTile": "167,181,70"},
       "255,128,192": {
         "images": [
-          "textures/desk_3",
+          "finaltexturelist/desk_3.png",
         ],
         "floorTile": "0,64,128"},
       "50,0,50": {
         "images": [
-          "textures/sick_bay_bed",
+          "finaltexturelist/sick_bay_bed.png",
         ],
         "floorTile": "128,128,255"},
       "10,0,10": {
         "images": [
-          "textures/medical_cabinet",
+          "finaltexturelist/medical_cabinet.png",
         ],
         "floorTile": "128,128,255"},
       "79,172,163": {
         "images": [
-          "textures/Easel",
+          "finaltexturelist/Easel.png",
         ],
         "floorTile": "128,128,255"},
       "174,140,77": {
         "images": [
-          "textures/ArtTable1",
+          "finaltexturelist/ArtTable1.png",
         ],
         "floorTile": "128,128,255"},
       "83,108,168": {
         "images": [
-          "textures/ArtSink",
+          "finaltexturelist/ArtSink.png",
         ],
         "floorTile": "128,128,255"}
       }
