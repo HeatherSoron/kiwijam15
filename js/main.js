@@ -5,6 +5,17 @@ var gameLoop;
 // player-lengths
 var sightDist = 8;
 
+var endgameFrames = [
+];
+var endgameFramePattern = "Scoopy_Death_FINAL/scoopy_deathFINAL%d.png";
+var endgameFrameCount = 21;
+
+var endgameFrameDelay = 100;
+var currentEndgameFrameDelay;
+var currentEndgameFrame;
+
+var playEnding;
+
 // lime green
 var endTextColor = 'rgb(0,255,0)';
 var lossText = "a sacrifice for mr. scoopy's eyes-cream";
@@ -14,7 +25,7 @@ var score;
 var scoopyScorePenalty = 30;
 var scorePerScoopFrame = 1;
 
-var creditStartDelay;
+var endingStartDelay;
 var iceCreamSpawnChance = 1.0 / 50;
 
 var cones;
@@ -62,6 +73,12 @@ var musicVolume = 0.15;
 function init() {
 	canvas = document.getElementById('kiwijam');
 	ctx = canvas.getContext('2d');
+	
+	for (var i = 0; i < endgameFrameCount; ++i) {
+		var image = new Image();
+		image.src = fullImagePath(endgameFramePattern.replace(/%d/, i));
+		endgameFrames.push(image);
+	}
 
 	splatImage = new Image();
 	splatImage.src = fullImagePath("SplatDetailed.png");
@@ -135,6 +152,9 @@ function startGame() {
 	// currentLevel = processLevel(foo.level);
 
 	loadMapInit();
+	
+	currentEndgameFrame = 0;
+	currentEndgameFrameDelay = endgameFrameDelay;
 
 	player = {
 		speed: 5,
@@ -215,8 +235,9 @@ function startGame() {
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
 	
-	creditStartDelay = 1000;
+	endingStartDelay = 1000;
 	creditsPlaying = false;
+	playEnding = false;
 	creditY = canvas.height + 50;
 
 // <<<<<<< HEAD
@@ -244,8 +265,19 @@ function runGame() {
 		gradOuterRad = Math.max(30, gradOuterRad - 3);
 		gradInnerRad = Math.max(0, gradInnerRad - 1);
 		if (gradOuterRad <= 30) {
-			creditStartDelay -= frameDuration;
-			if (creditStartDelay < 0) {
+			endingStartDelay -= frameDuration;
+			if (endingStartDelay < 0) {
+				playEnding = true;
+			}
+		}
+		if (playEnding) {
+			if (currentEndgameFrame < endgameFrameCount) {
+				currentEndgameFrameDelay -= frameDuration;
+				if (currentEndgameFrameDelay < 0) {
+					currentEndgameFrameDelay = endgameFrameDelay;
+					currentEndgameFrame += 1;
+				}
+			} else {
 				creditsPlaying = true;
 			}
 		}
@@ -396,7 +428,7 @@ function drawScreen() {
 	ctx.fillStyle = gradient;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-	if (lost && !creditsPlaying) {
+	if (lost && !playEnding) {
 		ctx.textAlign="left";
 		ctx.fillStyle = endTextColor;
 		ctx.font = "bold 30pt Comic Sans MS";
@@ -408,8 +440,16 @@ function drawScreen() {
 		textWidth = ctx.measureText(scoreText).width;
 		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
 	}
+	
+	if (playEnding && currentEndgameFrame < endgameFrameCount) {
+		ctx.drawImage(endgameFrames[currentEndgameFrame], (canvas.width - 500)/2, (canvas.height - 500)/2);
+	}
 
 	if(creditsPlaying){
+		ctx.fillStyle = 'rgb(0,0,0)';
+		ctx.rect(0, 0, canvas.width, canvas.height);
+		ctx.fill();
+		
 		ctx.textAlign="center";
 		ctx.fillStyle = endTextColor;
 
