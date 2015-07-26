@@ -11,15 +11,15 @@ function loadMapInit(){
 function processMap(){
   var imagex = tileData.width;
   var imagey = tileData.height;
-  for(rowIndex = 0; rowIndex < imagex; rowIndex++){
+  for(rowIndex = 0; rowIndex < imagey; rowIndex++){
     var row = [];
-    for(columnIndex = 0; columnIndex < imagey; columnIndex++){
-      var rgb = getTile(rowIndex,columnIndex);
+    for(columnIndex = 0; columnIndex < imagex; columnIndex++){
+      var rgb = getTile(columnIndex,rowIndex);
       var symbol = rgb[0] +","+ rgb[1] +","+ rgb[2]
       row.push(symbol);
       if(symbol in foo.level.objects){
         var obj = foo.level.objects[symbol];
-        addObject(obj, rowIndex, columnIndex, foo.level.tileSize);
+        addObject(obj, columnIndex, rowIndex, foo.level.tileSize);
         row[columnIndex] = obj.floorTile;
       }
     }
