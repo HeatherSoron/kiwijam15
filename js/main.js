@@ -192,6 +192,8 @@ function startGame() {
 	scoopy = {
 		walkSpeed: 2.5,
 		runSpeed: 3.1,
+		// amount that Mr. Scoopy slows down when forcing his way through walls
+		slowdown: 4.0,
 		wanderAngle: 0,
 		pos: new Point(500, 200),
 		rad: 100,
@@ -341,18 +343,10 @@ function moveScoopy() {
 	}
 
 	if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
-		x = 0;
-		if(y <10){
-			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
-			y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
-		}
+		x /= scoopy.slowdown;
 	}
 	if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
-		y = 0;
-		if(x <10){
-			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
-			x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
-		}
+		y /= scoopy.slowdown;
 	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
