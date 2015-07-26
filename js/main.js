@@ -236,6 +236,7 @@ function moveScoopy() {
 	var y = 0;
 	var running = false;
 	var chaseDistance = player.rad * (sightDist - 3);
+
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
 
@@ -269,8 +270,16 @@ function moveScoopy() {
 
 	if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
 		x = 0;
+		if(y <10){
+			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
+			y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
+		}
 	}else if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
 		y = 0;
+		if(x <10){
+			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
+			x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
+		}
 	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
