@@ -142,7 +142,7 @@ function startGame() {
 		speed: 5,
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
-		pos: new Point(1000, 1200),
+		pos: new Point(4800, 840),
 		rad: 50,
 		scoopCount: 3,
 		frameCount: {
@@ -178,7 +178,7 @@ function startGame() {
 		walkSpeed: 4,
 		runSpeed: 5.1,
 		wanderAngle: 0,
-		pos: new Point(1400, 1700),
+		pos: new Point(3600, 1260),
 		rad: 100,
 		// delays in ms
 		currentDelay: 0,
@@ -216,7 +216,7 @@ function startGame() {
 	gradInnerRad = 25;
 
 // <<<<<<< HEAD
-	ambientMusic.volume = quietVolume;
+	ambientMusic.volume = musicVolume;
 // =======
 // 	ambientMusic.volume = musicVolume;
 // >>>>>>> e9e6dae0486b5bf1440547c508e12082efdc2f2e
