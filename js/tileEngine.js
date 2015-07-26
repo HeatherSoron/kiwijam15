@@ -22,6 +22,7 @@ function isCollidable(x, y){
   var tilex = Math.floor(x/currentLevel.tileSize);
   var tiley = Math.floor(y/currentLevel.tileSize);
   var tileSymbol = currentLevel.map[tiley][tilex];
+  // console.log(tileSymbol);
   if (tileSymbol in currentLevel.tiles) {
     return currentLevel.tiles[tileSymbol].collidable;
   }
