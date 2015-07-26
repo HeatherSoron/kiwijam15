@@ -14,35 +14,35 @@ Objects (Object id, Floor id)
 150, 10, 0: (Sink, kitchen_floor)
 
 
-128, 128, 64: Bookshelf right
-127, 128, 64: Bookshelf front
-126, 128, 64: Bookshelf left
-125, 128, 64: Bookshelf centre
-0, 64, 64: Toilet
-64, 0, 64: toilet sink
-0, 128, 64: toilet wall
+128, 128, 64: Bookshelf right (bookshelf_right, carpet_blue_light)
+127, 128, 64: Bookshelf front (bookshelf_front, carpet_blue_light)
+126, 128, 64: Bookshelf left (bookshelf_left, carpet_blue_light)
+125, 128, 64: Bookshelf centre (bookshelf_centre, carpet_blue_light)
+0, 64, 64: Toilet (toilet_2, dirty_floor)
+64, 0, 64: toilet sink (toilet_sink, dirty_floor)
 
-0, 0, 64: Cafeteria table 
-64, 0, 128: kitchen island on cafeteria floor
-255, 128, 192: desk(desk_3)
-50, 0, 50: Medical bed(sick_bay_bed)
-10, 0, 10: Medical cabinet(medical_cabinet)
 
-79, 172, 163: easel(Easel)
-174, 140, 77: art table(ArtTable1)
-83, 108, 168: art sink(ArtSink)
+0, 0, 64: Cafeteria table (Cafeteria, dirty_floor)
+64, 0, 128: kitchen island on cafeteria floor (KitchenIsland, dirty_floor)
+255, 128, 192: desk(desk_3, carpet_floorBlue)
+50, 0, 50: Medical bed(sick_bay_bed, concrete_wall_floor)
+10, 0, 10: Medical cabinet(medical_cabinet, concrete_wall_floor)
+
+79, 172, 163: easel(Easel, concrete_wall_floor)
+174, 140, 77: art table(ArtTable1, concrete_wall_floor)
+83, 108, 168: art sink(ArtSink, concrete_wall_floor)
 
 Floors:
-0, 255, 255: dirty floor
-128, 64, 64: Wood_floor
+0, 255, 255: dirty floor (dirty_floor)
+128, 64, 64: (Wood_floor)
 255, 255, 255: empty space
-0, 128, 255: kitchen_floor
-0, 64, 128: Carpet floor
-255, 128, 255: nurse floor
-255, 127, 39: Stage floor
+0, 128, 255:  (kitchen_floor)
+0, 64, 128: Carpet floor (capet_floorBlue)
+255, 128, 255: nurse floor (concrete_wall_floor)
+255, 127, 39: Stage floor (wood_floor_light)
 128, 128, 255: rec room floor (concrete_wall_floor)
-167, 181, 70: dirty floor(dirty_floor)
-64, 0, 0: library floor
+167, 181, 70: cafeteria floor dirty floor(dirty_floor)
+64, 0, 0: library floor (carpet_blue_light)
 
 Walls:
-0, 0, 0: Wood wall
+0, 0, 0: (Wooden_floor_dark)
