@@ -5,7 +5,6 @@ function interactWithObjects() {
 		var offset = obj.pos.minus(player.pos);
 		// the object position is top-left of the drawn sprite, but we need centered. Hack it with hardcoded magic numbers.
 		offset = offset.plus(new Point(75/2, 95/2));
-		console.log(offset);
 		if (offset.length() < player.rad) {
 			if (obj.def.ontouch) {
 				var doRemove = objectOntouch[obj.def.ontouch]();
