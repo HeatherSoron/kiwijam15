@@ -26,14 +26,34 @@ var gradInnerRad;
 
 var chaseMusic;
 var ambientMusic;
+var sfx = {
+	"death": "Eyeball_scooping.wav",
+	"throwCone": "Ice_cream_drop.wav",
+	"pickup": "Ice_cream_pick_up.wav",
+	"distract": "Scoopy_eats_ice_cream.wav",
+	"alert": [
+		"scoopy_eyes_cream.wav",
+		"scoopy_sacrifice.wav",
+	],
+	"ambient": [
+		"scoopy_grumble_1.wav",
+		"scoopy_grumble_2.wav",
+		"scoopy_grumble_3.wav",
+		"scoopy_sundae_drive.wav",
+		"scoopy_searching_come_out.wav",
+		"scoopy_searching_where_are_you.wav",
+	],
+}
 
 var lost = false;
+var creditsPlaying = false;
+var creditY = 0;
 
 var frameDuration = 20;
 
-var quietVolume = 1.0;
-var baseLoudVolume = 0.4;
-var volumeScaleRate = 0.6;
+// the music is set to a different loudness than the sfx
+// so, need to make them closer to the same loudness
+var musicVolume = 0.15;
 
 function init() {
 	canvas = document.getElementById('kiwijam');
@@ -41,15 +61,51 @@ function init() {
 
 	resizeCanvas();
 	registerListeners();
-	
+
 	ambientMusic = new Audio('resources/music/GameJamGREEN_1.mp3');
 	ambientMusic.loop = true;
-	
+
 	chaseMusic = new Audio('resources/music/GameJamCHASE_Celli&Glock.mp3');
 	chaseMusic.loop = true;
+	chaseMusic.volume = musicVolume;
 	
+	for (var key in sfx) {
+		if (typeof sfx[key] == 'object') {
+			for (var index in sfx[key]) {
+				var audio = new Audio('resources/sfx/' + sfx[key][index]);
+				sfx[key][index] = audio;
+			}
+		} else {
+			var audio = new Audio('resources/sfx/' + sfx[key]);
+			sfx[key] = audio;
+		}
+	}
+
+	creditY = canvas.height + 50;
 	startGame();
 	gameLoop = setInterval(runGame, frameDuration);
+}
+
+function isSfxPlaying() {
+	for (var key in sfx) {
+		if (sfx[key] instanceof Array) {
+			for (var index in sfx[key]) {
+				if (!sfx[key][index].paused) {
+					return true;
+				}
+			}
+		} else {
+			if (!sfx[key].paused) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+function playRandomAudio(arr) {	
+	var randIndex = Math.floor(Math.random() * arr.length);
+	arr[randIndex].play();
 }
 
 function fullImagePath(path) {
@@ -147,8 +203,8 @@ function startGame() {
 
 	gradOuterRad = player.rad * sightDist;
 	gradInnerRad = 25;
-	
-	ambientMusic.volume = quietVolume;
+
+	ambientMusic.volume = musicVolume;
 	ambientMusic.play();
 }
 
@@ -156,7 +212,8 @@ function runGame() {
 	if (!lost) {
 		if (isCollidable((player.vel.times(player.speed).x + player.pos.x), player.pos.y)){
 			player.vel.x = 0;
-		}else if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
+		}
+		if(isCollidable(player.pos.x, (player.vel.times(player.speed).y + player.pos.y))){
 			player.vel.y = 0;
 		}
 		// console.log(player.pos.x + "," + player.pos.y)
@@ -178,6 +235,7 @@ function throwCone() {
 		return false;
 	}
 	player.scoopCount--;
+	sfx.throwCone.play();
 	var offset = scoopy.pos.minus(player.pos);
 	var dir = offset.normalize();
 
@@ -214,12 +272,14 @@ function moveScoopy() {
 	var y = 0;
 	var running = false;
 	var chaseDistance = player.rad * (sightDist - 3);
+
 	if (offset.length() < chaseDistance) {
 		var scaleFactor = (1 - (offset.length() / chaseDistance));
-		
+
 		if (!ambientMusic.paused) {
 			ambientMusic.pause();
 			chaseMusic.play();
+			playRandomAudio(sfx.alert);
 		}
 		x = dir.x * scoopy.runSpeed;
 		y = dir.y * scoopy.runSpeed;
@@ -227,6 +287,7 @@ function moveScoopy() {
 			if (cone === undefined) {
 				lose();
 			} else {
+				sfx.distract.play();
 				cones.splice(cone, 1);
 				scoopy.currentDelay = scoopy.eatDelay;
 			}
@@ -245,19 +306,36 @@ function moveScoopy() {
 		score += player.scoopCount * scorePerScoopFrame;
 	}
 
-	// if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
-	// 	x = 0;
-	// }else if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
-	// 	y = 0;
-	// }
+	if (isCollidable(scoopy.pos.x + x, scoopy.pos.y)){
+		x = 0;
+		if(y <10){
+			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
+			y = (Math.sin(scoopy.wanderAngle) + playerDir.y) / 2 * scoopy.walkSpeed;
+		}
+	}
+	if(isCollidable(scoopy.pos.x, scoopy.pos.y + y)){
+		y = 0;
+		if(x <10){
+			scoopy.wanderAngle += (Math.random() - 0.5) / 2;
+			x = (Math.cos(scoopy.wanderAngle) + playerDir.x) / 2 * scoopy.walkSpeed;
+		}
+	}
 	scoopy.pos.x += x;
 	scoopy.pos.y += y;
+	
+	if (!isSfxPlaying()) {
+		var chance = running ? 0.02 : 0.01;
+		if (Math.random() < chance) {
+			playRandomAudio(sfx.ambient);
+		}
+	}
 
 	animateScoopy(x, y, running);
 }
 
 function lose() {
 	lost = true;
+	sfx.death.play();
 	drawScreen();
 }
 
@@ -273,7 +351,7 @@ function drawScreen() {
 	ctx.translate(-player.pos.x + canvas.width/2, -player.pos.y + canvas.height/2);
 
 	//Draw map
-	tileEngine(ctx);
+	tileEngine(ctx, player.pos.x, player.pos.y);
 
 	for (var i = 0; i < objects.length; ++i) {
 		var image = new Image();
@@ -303,6 +381,7 @@ function drawScreen() {
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	if (lost) {
+		ctx.textAlign="left";
 		ctx.fillStyle = endTextColor;
 		ctx.font = "bold 30pt Comic Sans MS";
 
@@ -313,6 +392,30 @@ function drawScreen() {
 		textWidth = ctx.measureText(scoreText).width;
 		ctx.fillText(scoreText, (canvas.width - textWidth) / 2, canvas.height - 60);
 	}
+
+	if(creditsPlaying){
+		ctx.textAlign="center";
+		ctx.fillStyle = endTextColor;
+
+		// var credit = "";
+		for(index in credits.creditText){
+			var credit = credits.creditText[index];
+			textWidth = ctx.measureText(scoreText).width;
+			if(credit.charAt(0) !='#'){
+				ctx.font = "bold 30pt Lucida Sans MS";
+			} else{
+				ctx.font = "bold 20pt Lucida Sans MS";
+				credit = credit.substring(1);
+			}
+			ctx.fillText(credit, canvas.width / 2,index*canvas.width/25 +   creditY);
+
+		}
+		creditY--;
+	}
+}
+
+function credits(ctx){
+
 }
 
 function drawCharacter(char) {
