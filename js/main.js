@@ -5,8 +5,7 @@ var gameLoop;
 // player-lengths
 var sightDist = 8;
 
-var endgameFrames = [
-];
+var endgameFrames = [];
 var endgameFramePattern = "Scoopy_Death_FINAL/scoopy_deathFINAL%d.png";
 var endgameFrameCount = 21;
 
@@ -80,6 +79,8 @@ function init() {
 		endgameFrames.push(image);
 	}
 
+	addAllObjectImages(foo.level.objects);
+
 	splatImage = new Image();
 	splatImage.src = fullImagePath("SplatDetailed.png");
 
@@ -91,9 +92,6 @@ function init() {
 
 	chaseMusic = new Audio('resources/music/GameJamCHASE_Celli&Glock.mp3');
 	chaseMusic.loop = true;
-// <<<<<<< HEAD
-//
-// =======
 	chaseMusic.volume = musicVolume;
 
 	for (var key in sfx) {
@@ -137,6 +135,33 @@ function fullImagePath(path) {
 	return "resources/images/" + path;
 }
 
+var objImageList = [];
+
+function addAllObjectImages(objectList){
+	for(objectIndex in objectList){
+		if(objectList[objectIndex].images.length > 1){
+			for(imageIndex in objectList[objectIndex].images){
+				var tmpImage = new Image();
+				tmpImage.src = fullImagePath(objectList[objectIndex].images[imageIndex]);
+				objImageList.push(tmpImage);
+			}
+		}else{
+			var tmpImage = new Image();
+			tmpImage.src = fullImagePath(objectList[objectIndex].images[0]);
+			objImageList.push(tmpImage);
+		}
+	}
+}
+
+function getImage(url){
+	for(i in objImageList){
+		if(objImageList[i].src.indexOf(url) != -1){
+			return objImageList[i];
+		}
+	}
+	return undefined;
+}
+
 function addObject(objDef, x, y, tileSize) {
 	objects.push({
 		def: objDef,
@@ -149,7 +174,6 @@ function startGame() {
 	score = 0;
 	objects = [];
 	cones = [];
-	// currentLevel = processLevel(foo.level);
 
 	loadMapInit();
 
@@ -240,11 +264,7 @@ function startGame() {
 	playEnding = false;
 	creditY = canvas.height + 50;
 
-// <<<<<<< HEAD
 	ambientMusic.volume = musicVolume;
-// =======
-// 	ambientMusic.volume = musicVolume;
-// >>>>>>> e9e6dae0486b5bf1440547c508e12082efdc2f2e
 	ambientMusic.play();
 }
 
@@ -427,12 +447,11 @@ function drawScreen() {
 
 		//Draw map
 		tileEngine(ctx, player.pos.x, player.pos.y);
-
+		var currentObjectImage;
 		for (var i = 0; i < objects.length; ++i) {
-			if(Math.abs(objects[i].pos.x - player.pos.x) < canvas.width && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height){
-				var image = new Image();
-				image.src = fullImagePath(objects[i].def.images[objects[i].imageVariation]);
-				ctx.drawImage(image, objects[i].pos.x, objects[i].pos.y);
+			if(Math.abs(objects[i].pos.x - player.pos.x) < canvas.width/2 + canvas.width*.1 && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height/2+canvas.height*.1){
+				currentObjectImage = getImage(objects[i].def.images[objects[i].imageVariation]);
+				ctx.drawImage(currentObjectImage, objects[i].pos.x, objects[i].pos.y);
 			}
 		}
 
