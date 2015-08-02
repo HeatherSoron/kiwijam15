@@ -184,7 +184,7 @@ function startGame() {
 		speed: 5,
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
-		pos: new Point(8400, 3850),
+		pos: new Point(4814, 904),
 		rad: 50,
 		scoopCount: 3,
 		frameCount: {
