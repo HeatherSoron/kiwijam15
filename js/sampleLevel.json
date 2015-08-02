@@ -164,7 +164,12 @@ var foo =
         "images": [
           "finaltexturelist/bench_big.png",
         ],
-        "floorTile": "128,64,63"}
+        "floorTile": "128,64,63"},
+    "0,0,255": {
+        "images": [
+          "finaltexturelist/gym_overlay_HUGE.png",
+        ],
+        "floorTile": "128,64,64"}
       }
     }
   }

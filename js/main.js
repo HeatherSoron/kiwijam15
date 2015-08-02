@@ -184,7 +184,7 @@ function startGame() {
 		speed: 5,
 		// velocity is not really a point, but it's an xy tuple
 		vel: new Point(),
-		pos: new Point(4800, 900),
+		pos: new Point(8400, 3850),
 		rad: 50,
 		scoopCount: 3,
 		frameCount: {
@@ -307,6 +307,7 @@ function runGame() {
 			}
 		}
 	}
+	console.log("x:" + player.pos.x + ", y:" + player.pos.y);
 	drawScreen();
 
 }
@@ -447,13 +448,16 @@ function drawScreen() {
 
 		//Draw map
 		tileEngine(ctx, player.pos.x, player.pos.y);
+		// var obCount = 0;
 		var currentObjectImage;
 		for (var i = 0; i < objects.length; ++i) {
-			if(Math.abs(objects[i].pos.x - player.pos.x) < canvas.width/2 + canvas.width*.1 && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height/2+canvas.height*.1){
+			if((Math.abs(objects[i].pos.x - player.pos.x) < canvas.width/2 + canvas.width*.1 && Math.abs(objects[i].pos.y - player.pos.y) < canvas.height/2+canvas.height*.1) || objects[i].def.images[objects[i].imageVariation] == "finaltexturelist/gym_overlay_HUGE.png"){
 				currentObjectImage = getImage(objects[i].def.images[objects[i].imageVariation]);
 				ctx.drawImage(currentObjectImage, objects[i].pos.x, objects[i].pos.y);
+				// obCount++;
 			}
 		}
+		// console.log(obCount);
 
 		drawCharacter(player);
 
